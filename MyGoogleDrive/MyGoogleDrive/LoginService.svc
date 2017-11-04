@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="MyGoogleDrive.LoginService" CodeBehind="LoginService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="MyGoogleDrive.MainService" CodeBehind="MainService.svc.cs" %>

@@ -9,10 +9,21 @@ using System.Text;
 namespace MyGoogleDrive
 {    
     [ServiceContract]
-    public interface IAuthService
+    public interface IAuth
     {
         [OperationContract]
         string Login(string login, string password);            
     }    
+
+    [ServiceContract]
+    public interface IDrive
+    {
+        [OperationContract]
+        void LoadFile(string name, byte[] data);
+
+
+
+
+    }
     
 }

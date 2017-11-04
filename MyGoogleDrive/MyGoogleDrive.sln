@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGoogleDrive", "MyGoogleDrive\MyGoogleDrive.csproj", "{42AC93DB-F923-4EC6-8C68-D16767373DDB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClient", "MyClient\MyClient.csproj", "{1C5D010C-79DA-4741-A659-859630380247}"
+	ProjectSection(ProjectDependencies) = postProject
+		{42AC93DB-F923-4EC6-8C68-D16767373DDB} = {42AC93DB-F923-4EC6-8C68-D16767373DDB}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
