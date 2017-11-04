@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MyClient.GoogleDriveService;
+using MyClient.MyGoogleDrive;
 
 namespace MyClient
 {
@@ -24,9 +24,12 @@ namespace MyClient
         public MainWindow()
         {
             InitializeComponent();
-            AuthServiceClient cl = new AuthServiceClient();
+            AuthClient cl = new AuthClient();
+            DriveClient cli = new DriveClient();           
 
-            cl.Login("1", "2");
+            textBox.Text = cl.Login("1", "2");
+
+            
         }
     }
 }

@@ -57,7 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Service References\GoogleDriveService\Reference.cs">
+    <Compile Include="Service References\MyGoogleDrive\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -98,11 +98,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\GoogleDriveService\LoginService.wsdl" />
-    <None Include="Service References\GoogleDriveService\LoginService.xsd">
+    <None Include="Service References\MyGoogleDrive\MainService.wsdl" />
+    <None Include="Service References\MyGoogleDrive\Service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\GoogleDriveService\LoginService1.xsd">
+    <None Include="Service References\MyGoogleDrive\Service1.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -113,19 +113,19 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\GoogleDriveService\" />
+    <WCFMetadataStorage Include="Service References\MyGoogleDrive\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\GoogleDriveService\LoginService.disco" />
+    <None Include="Service References\MyGoogleDrive\Service.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\GoogleDriveService\configuration91.svcinfo" />
+    <None Include="Service References\MyGoogleDrive\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\GoogleDriveService\configuration.svcinfo" />
+    <None Include="Service References\MyGoogleDrive\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\GoogleDriveService\Reference.svcmap">
+    <None Include="Service References\MyGoogleDrive\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
