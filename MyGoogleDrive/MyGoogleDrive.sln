@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGoogleDrive", "MyGoogleDrive\MyGoogleDrive.csproj", "{42AC93DB-F923-4EC6-8C68-D16767373DDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClient", "MyClient\MyClient.csproj", "{1C5D010C-79DA-4741-A659-859630380247}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyClient", "MyClient\MyClient.csproj", "{8352E839-AF15-4D9F-8FD1-BFD7452FBDE9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{42AC93DB-F923-4EC6-8C68-D16767373DDB} = {42AC93DB-F923-4EC6-8C68-D16767373DDB}
 	EndProjectSection
@@ -20,10 +20,10 @@ Global
 		{42AC93DB-F923-4EC6-8C68-D16767373DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42AC93DB-F923-4EC6-8C68-D16767373DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42AC93DB-F923-4EC6-8C68-D16767373DDB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C5D010C-79DA-4741-A659-859630380247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C5D010C-79DA-4741-A659-859630380247}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C5D010C-79DA-4741-A659-859630380247}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C5D010C-79DA-4741-A659-859630380247}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8352E839-AF15-4D9F-8FD1-BFD7452FBDE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8352E839-AF15-4D9F-8FD1-BFD7452FBDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8352E839-AF15-4D9F-8FD1-BFD7452FBDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8352E839-AF15-4D9F-8FD1-BFD7452FBDE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

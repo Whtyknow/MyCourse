@@ -23,12 +23,17 @@ namespace MyGoogleDrive
         
         public int UserId { get; set; }
 
-        [Required,MaxLength(30), MinLength(3)]
+        [Required,MaxLength(30), MinLength(3)][Index(IsUnique = true)]
         public string Login { get; set; }
         
-        [Required,MaxLength(30), MinLength(6)]        
-        public string Password { get; set; }          
+        [Required,MaxLength(30), MinLength(3)]        
+        public string Password { get; set; }    
         
+        public string LocalDirectory { get; set;}
+
+        public string ServerDirectory { get; set; }
+
+
         public Role Role { get; set; }
     }
 
@@ -37,7 +42,7 @@ namespace MyGoogleDrive
         
         public int RoleId { get; set; }
 
-        [Required]
+        [Required][Index(IsUnique = true)][MaxLength(50)]
         public string Name { get; set; }
         
         public int Price { get; set; }

@@ -63,10 +63,16 @@ namespace MyClient.MyGoogleDrive {
     public interface IAuth {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuth/Login", ReplyAction="http://tempuri.org/IAuth/LoginResponse")]
-        string Login([System.ServiceModel.MessageParameterAttribute(Name="login")] string login1, string password);
+        bool Login([System.ServiceModel.MessageParameterAttribute(Name="login")] string login1, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuth/Login", ReplyAction="http://tempuri.org/IAuth/LoginResponse")]
-        System.Threading.Tasks.Task<string> LoginAsync(string login, string password);
+        System.Threading.Tasks.Task<bool> LoginAsync(string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuth/Register", ReplyAction="http://tempuri.org/IAuth/RegisterResponse")]
+        bool Register(string login, string password, string role);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuth/Register", ReplyAction="http://tempuri.org/IAuth/RegisterResponse")]
+        System.Threading.Tasks.Task<bool> RegisterAsync(string login, string password, string role);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -96,12 +102,20 @@ namespace MyClient.MyGoogleDrive {
                 base(binding, remoteAddress) {
         }
         
-        public string Login(string login1, string password) {
+        public bool Login(string login1, string password) {
             return base.Channel.Login(login1, password);
         }
         
-        public System.Threading.Tasks.Task<string> LoginAsync(string login, string password) {
+        public System.Threading.Tasks.Task<bool> LoginAsync(string login, string password) {
             return base.Channel.LoginAsync(login, password);
+        }
+        
+        public bool Register(string login, string password, string role) {
+            return base.Channel.Register(login, password, role);
+        }
+        
+        public System.Threading.Tasks.Task<bool> RegisterAsync(string login, string password, string role) {
+            return base.Channel.RegisterAsync(login, password, role);
         }
     }
 }
