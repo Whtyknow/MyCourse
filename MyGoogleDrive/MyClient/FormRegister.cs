@@ -23,7 +23,7 @@ namespace MyClient
         {
             AuthClient cl = new AuthClient();
             
-            bool res = cl.Register(textBoxLogin.Text, textBoxPassword.Text, (string)comboBoxRole.SelectedValue);
+            bool res = cl.Register(textBoxLogin.Text, textBoxPassword.Text, Convert.ToString(comboBoxRole.SelectedItem));
 
             if (res == true) MessageBox.Show("Registered");
             else MessageBox.Show("Something went wrong");

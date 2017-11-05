@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.IO;
 
 namespace MyGoogleDrive
 {    
@@ -24,7 +25,17 @@ namespace MyGoogleDrive
         [OperationContract]
         void LoadFile(string name, byte[] data);
 
+        [OperationContract]
+        UserInfo GetUserInfo(string login);
 
+        [OperationContract]
+        void SetUserInfo(UserInfo info);
+
+        [OperationContract]
+        DirectoryInfo GetDirectoryInfo();
+
+        
+        
     }
     
 }

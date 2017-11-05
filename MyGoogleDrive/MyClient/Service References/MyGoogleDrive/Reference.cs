@@ -9,7 +9,86 @@
 //------------------------------------------------------------------------------
 
 namespace MyClient.MyGoogleDrive {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserInfo", Namespace="http://schemas.datacontract.org/2004/07/MyGoogleDrive")]
+    [System.SerializableAttribute()]
+    public partial class UserInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LocalDirectoryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoginField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ServerDirectoryField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LocalDirectory {
+            get {
+                return this.LocalDirectoryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LocalDirectoryField, value) != true)) {
+                    this.LocalDirectoryField = value;
+                    this.RaisePropertyChanged("LocalDirectory");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Login {
+            get {
+                return this.LoginField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
+                    this.LoginField = value;
+                    this.RaisePropertyChanged("Login");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ServerDirectory {
+            get {
+                return this.ServerDirectoryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ServerDirectoryField, value) != true)) {
+                    this.ServerDirectoryField = value;
+                    this.RaisePropertyChanged("ServerDirectory");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MyGoogleDrive.IDrive")]
@@ -20,6 +99,24 @@ namespace MyClient.MyGoogleDrive {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/LoadFile", ReplyAction="http://tempuri.org/IDrive/LoadFileResponse")]
         System.Threading.Tasks.Task LoadFileAsync(string name, byte[] data);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetUserInfo", ReplyAction="http://tempuri.org/IDrive/GetUserInfoResponse")]
+        MyClient.MyGoogleDrive.UserInfo GetUserInfo(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetUserInfo", ReplyAction="http://tempuri.org/IDrive/GetUserInfoResponse")]
+        System.Threading.Tasks.Task<MyClient.MyGoogleDrive.UserInfo> GetUserInfoAsync(string login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/SetUserInfo", ReplyAction="http://tempuri.org/IDrive/SetUserInfoResponse")]
+        void SetUserInfo(MyClient.MyGoogleDrive.UserInfo info);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/SetUserInfo", ReplyAction="http://tempuri.org/IDrive/SetUserInfoResponse")]
+        System.Threading.Tasks.Task SetUserInfoAsync(MyClient.MyGoogleDrive.UserInfo info);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetDirectoryInfo", ReplyAction="http://tempuri.org/IDrive/GetDirectoryInfoResponse")]
+        System.IO.DirectoryInfo GetDirectoryInfo();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetDirectoryInfo", ReplyAction="http://tempuri.org/IDrive/GetDirectoryInfoResponse")]
+        System.Threading.Tasks.Task<System.IO.DirectoryInfo> GetDirectoryInfoAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -55,6 +152,30 @@ namespace MyClient.MyGoogleDrive {
         
         public System.Threading.Tasks.Task LoadFileAsync(string name, byte[] data) {
             return base.Channel.LoadFileAsync(name, data);
+        }
+        
+        public MyClient.MyGoogleDrive.UserInfo GetUserInfo(string login) {
+            return base.Channel.GetUserInfo(login);
+        }
+        
+        public System.Threading.Tasks.Task<MyClient.MyGoogleDrive.UserInfo> GetUserInfoAsync(string login) {
+            return base.Channel.GetUserInfoAsync(login);
+        }
+        
+        public void SetUserInfo(MyClient.MyGoogleDrive.UserInfo info) {
+            base.Channel.SetUserInfo(info);
+        }
+        
+        public System.Threading.Tasks.Task SetUserInfoAsync(MyClient.MyGoogleDrive.UserInfo info) {
+            return base.Channel.SetUserInfoAsync(info);
+        }
+        
+        public System.IO.DirectoryInfo GetDirectoryInfo() {
+            return base.Channel.GetDirectoryInfo();
+        }
+        
+        public System.Threading.Tasks.Task<System.IO.DirectoryInfo> GetDirectoryInfoAsync() {
+            return base.Channel.GetDirectoryInfoAsync();
         }
     }
     

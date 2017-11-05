@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DriveClasses\Drive.cs" />
     <Compile Include="FormDrive.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +88,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="FormRegister.resx">
       <DependentUpon>FormRegister.cs</DependentUpon>
@@ -101,10 +103,19 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Service References\MyGoogleDrive\MainService.wsdl" />
+    <None Include="Service References\MyGoogleDrive\MyClient.MyGoogleDrive.UserInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\MyGoogleDrive\Service.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MyGoogleDrive\Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MyGoogleDrive\Service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MyGoogleDrive\Service3.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -113,6 +124,21 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crystal_txt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exec_wine.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hdd_unmount.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jpeg_grey.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kde_gnome_fs_directory_accept.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\MyGoogleDrive\" />
