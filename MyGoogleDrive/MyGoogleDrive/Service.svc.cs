@@ -15,23 +15,23 @@ namespace MyGoogleDrive
     public class MainService : IAuth, IDrive
     {
         Db db;
-        User currentUser;
+        User u;     
 
         public MainService()
         {
-            db = new Db();          
-                     
+            db = new Db();                          
         }
 
         public bool Login(string login, string password)
         {
-            User u = db.Users.Where(x => x.Login == login).SingleOrDefault();
+            u = db.Users.Where(x => x.Login == login).SingleOrDefault();
             if (u != null)
             {
                 if (u.Password == password)
                 {
                     
                     return true;
+                     
                 }
             }
             return false;
@@ -64,35 +64,34 @@ namespace MyGoogleDrive
         }
 
         public bool LoadFile(string name, byte[] data)
-        {
-            
-                using (var fs = new FileStream(currentUser.ServerDirectory+@"\"+name, FileMode.Create, FileAccess.Write))
+        {            
+            if (u != null)
+            {
+                using (var fs = new FileStream(u.ServerDirectory + @"\" + name, FileMode.Create, FileAccess.Write))
                 {
                     fs.Write(data, 0, data.Length);
                     return true;
-                }           
+                }
+            }
+            return false;
             
-        }
-
-        public UserInfo GetUserInfo(string login)
-        {
-            User u = db.Users.Where(x => x.Login == login).SingleOrDefault();
-            currentUser = u;
-            UserInfo ui = new UserInfo() { Login = currentUser.Login, LocalDirectory = currentUser.LocalDirectory, ServerDirectory = currentUser.ServerDirectory };
-            return ui;
-        }
+        }        
         
         public DirectoryInfo GetDirectoryInfo()
-        {
-            try
+        {            
+            if (u != null)
             {
-                DirectoryInfo d = new DirectoryInfo(currentUser.ServerDirectory);
-                return d;
+                try
+                {
+                    DirectoryInfo d = new DirectoryInfo(u.ServerDirectory);
+                    return d;
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
             }
-            catch (Exception e)
-            {
-                return null;
-            }
+            return null;
         }
     }   
 }

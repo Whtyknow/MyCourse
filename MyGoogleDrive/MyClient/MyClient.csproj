@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DriveClasses\DataInfo.cs" />
     <Compile Include="DriveClasses\Drive.cs" />
     <Compile Include="FormDrive.cs">
       <SubType>Form</SubType>
@@ -103,9 +104,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Service References\MyGoogleDrive\MainService.wsdl" />
-    <None Include="Service References\MyGoogleDrive\MyClient.MyGoogleDrive.UserInfo.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\MyGoogleDrive\Service.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -113,9 +111,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MyGoogleDrive\Service2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MyGoogleDrive\Service3.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

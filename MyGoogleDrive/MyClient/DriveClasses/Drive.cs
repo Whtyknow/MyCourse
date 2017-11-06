@@ -11,54 +11,18 @@ namespace MyClient.DriveClasses
 {
     static class Drive
     {
-        public static void LoadFolder(DirectoryInfo dir, TreeView tree, ListView list)
+        public static void LoadFolder(string path, TreeView treeView, ListView listView)
         {
-            try
+            DirectoryInfo d = new DirectoryInfo(path);
+            if (d != null)
             {
-                tree.Nodes.Clear();
-                list.Items.Clear();
-
-                tree.Nodes.Add(dir.Name);
-                tree.Nodes[tree.Nodes.Count - 1].Tag = dir.FullName;
-
-                DirectoryInfo[] folders = dir.GetDirectories();
-                FileInfo[] files = dir.GetFiles();
-                TreeNode node;
-
-
-                foreach (DirectoryInfo dirinfo in folders)
+                foreach (DirectoryInfo dir in d.GetDirectories())
                 {
-                    node = tree.Nodes[tree.Nodes.Count - 1];
-                    node.Nodes.Add(dirinfo.Name);
-                    node.Nodes[node.Nodes.Count-1].Tag = dirinfo.FullName;
-
-                    list.Items.Add(dirinfo.Name);
-                    ListViewItem item = list.Items[list.Items.Count - 1];
-                    item.Tag = dir.FullName;
-                    item.ImageIndex = 0;
-                    item.SubItems.Add(dirinfo.FullName);
-                    item.SubItems.Add(dirinfo.CreationTime.ToString());
-                    item.SubItems.Add(dirinfo.LastAccessTime.ToString());
-
-
+                    treeView.Nodes.Add(dir.Name);
+                    treeView.Nodes[treeView.Nodes.Count - 1].Tag = dir.FullName;
+                    listView.Items.Add(dir.Name);
                 }
-                foreach (FileInfo fileinfo in files)
-                {                    
-                    list.Items.Add(fileinfo.Name);
-                    ListViewItem item = list.Items[list.Items.Count - 1];
-                    item.Tag = fileinfo.FullName;                  
-                    item.ImageIndex = 1;
-                    item.SubItems.Add(fileinfo.FullName);
-                    item.SubItems.Add(fileinfo.CreationTime.ToString());
-                    item.SubItems.Add(fileinfo.CreationTime.ToString());
-                }              
-
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);                
-            }
-            
         }
 
         public static void SetUpView(TreeView treeView, ListView listView)
@@ -83,6 +47,85 @@ namespace MyClient.DriveClasses
             imagelist2.ColorDepth = ColorDepth.Depth32Bit;
             listView.LargeImageList = imagelist2;
             listView.SmallImageList = imagelist2;
+        }
+
+        public static void LoadTreeView(string direct, TreeView treeView, ListView listView, DataInfo info)
+        {
+
+            string[] dirs = Directory.GetDirectories((string)treeView.SelectedNode.Tag);
+            foreach (string path in dirs)
+            {
+                info.dirinfo = new DirectoryInfo(path);
+                treeView.SelectedNode.Nodes.Add(info.dirinfo.Name);
+                treeView.SelectedNode.Nodes[treeView.SelectedNode.Nodes.Count - 1].Tag = path;
+            }
+            LoadListView(direct, listView, info);
+        }
+
+        public static void LoadListView(string direct, ListView listView, DataInfo info)
+        {
+            listView.Items.Clear();
+            string[] dirs = Directory.GetDirectories(direct);
+            string[] files = Directory.GetFiles(direct);
+
+            foreach (string dir in dirs)
+            {
+                info.dirinfo = new DirectoryInfo(dir);
+                listView.Items.Add(info.dirinfo.Name);
+                listView.Items[listView.Items.Count - 1].Tag = dir;
+                listView.Items[listView.Items.Count - 1].ImageIndex = 0;
+                listView.Items[listView.Items.Count - 1].SubItems.Add(info.dirinfo.FullName);
+                listView.Items[listView.Items.Count - 1].SubItems.Add(info.dirinfo.CreationTime.ToString());
+                listView.Items[listView.Items.Count - 1].SubItems.Add(info.dirinfo.LastAccessTime.ToString());
+            }
+            foreach (string file in files)
+            {
+
+                info.fileinfo = new FileInfo(file);
+                listView.Items.Add(info.fileinfo.Name);
+                listView.Items[listView.Items.Count - 1].ImageIndex = 1;
+                listView.Items[listView.Items.Count - 1].SubItems.Add(info.fileinfo.FullName);
+                listView.Items[listView.Items.Count - 1].SubItems.Add(info.fileinfo.CreationTime.ToString());
+                listView.Items[listView.Items.Count - 1].SubItems.Add(info.fileinfo.CreationTime.ToString());
+            }
+        }
+
+        internal static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        {
+            // Get the subdirectories for the specified directory.
+            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
+
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException(
+                    "Source directory does not exist or could not be found: "
+                    + sourceDirName);
+            }
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            // If the destination directory doesn't exist, create it.
+            if (!Directory.Exists(destDirName))
+            {
+                Directory.CreateDirectory(destDirName);
+            }
+
+            // Get the files in the directory and copy them to the new location.
+            FileInfo[] files = dir.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                string temppath = Path.Combine(destDirName, file.Name);
+                file.CopyTo(temppath, false);
+            }
+
+            // If copying subdirectories, copy them and their contents to new location.
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string temppath = Path.Combine(destDirName, subdir.Name);
+                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
+                }
+            }
         }
     }
 }
