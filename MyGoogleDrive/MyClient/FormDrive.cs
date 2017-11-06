@@ -10,48 +10,38 @@ using System.Windows.Forms;
 using MyClient.MyGoogleDrive;
 using System.IO;
 using MyClient.DriveClasses;
+using Microsoft.Win32;
 
 namespace MyClient
 {
     public partial class FormDrive : Form
     {
-        DriveClient cl;
-        UserInfo u;
+        DriveClient cl;        
+        string localDirectory;
+        Task t = new Task(Sync);
+
 
         public FormDrive(string login, string password)
         {
             InitializeComponent();
+
             cl = new DriveClient(); 
             cl.ClientCredentials.UserName.UserName = login;
             cl.ClientCredentials.UserName.Password = password;
 
-            Image[] images1 = new Image[] {                
-                Properties.Resources.directory
-            };
-            Image[] images2 = new Image[]{
-                Properties.Resources.directory,
-                Properties.Resources.file               
-            };
+            Drive.SetUpView(treeView, listView);            
 
-            ImageList imagelist1 = new ImageList();
-            imagelist1.Images.AddRange(images1);
-            imagelist1.ColorDepth = ColorDepth.Depth32Bit;
-            treeView.ImageList = imagelist1;
-            treeView.ImageIndex = 0;
-            treeView.SelectedImageIndex = 0;
-
-            ImageList imagelist2 = new ImageList();
-            imagelist2.Images.AddRange(images2);
-            imagelist2.ColorDepth = ColorDepth.Depth32Bit;
-            listView.LargeImageList = imagelist2;
-            listView.SmallImageList = imagelist2;
-            
-             u = cl.GetUserInfo(login);
-
-            if (Directory.Exists(u.LocalDirectory))
+            localDirectory = Registry.GetValue(@"HKEY_CURRENT_USER\SOFTWARE\MyGoogleDrive",
+                                    "LocalFolder", "NULL").ToString();
+            if (localDirectory == "NULL")
             {
-                Drive.LoadFolder(new DirectoryInfo(u.LocalDirectory), treeView, listView);
+                MessageBox.Show("Please select a local folder");
             }
+            else
+            {
+                //Task starts here
+            }
+            
         }
 
         private void buttonSelectFolder_Click(object sender, EventArgs e)
@@ -60,10 +50,9 @@ namespace MyClient
             {
                 FolderBrowserDialog d = new FolderBrowserDialog();
                 if (d.ShowDialog() == DialogResult.OK)
-                {                    
-                    u.LocalDirectory = d.SelectedPath;
-                    cl.SetUserInfo(u);     
-
+                {                     
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\MyGoogleDrive", "LocalFolder", d.SelectedPath);
+                    //if(t.Status == TaskStatus.Running) t.
                 }
             }
             else
@@ -83,12 +72,14 @@ namespace MyClient
             }
         }
 
-        private void Sync()
+        static private void Sync()
         {
-            DirectoryInfo d = cl.GetDirectoryInfo();
-            Task t1 = new Task(() => SyncFolders(d, u.LocalDirectory));
-            t1.Start();
-            t1.Wait();           
+            while (true)
+            {
+                DirectoryInfo d = cl.GetDirectoryInfo();
+                
+
+            }
 
         }
 
@@ -101,6 +92,27 @@ namespace MyClient
                 if (!Directory.Exists(u.LocalDirectory + @"\" + dir.Name)) Directory.CreateDirectory((path + @"\" + dir.Name));
                 
                 SyncFolders(dir, path + @"\" + dir.Name);
+            }
+        }
+
+        private void buttonLoad_Click(object sender, EventArgs e)
+        {           
+            OpenFileDialog d = new OpenFileDialog();
+            if(d.ShowDialog() == DialogResult.OK)
+            {                
+                using (FileStream stream = new FileStream(d.FileName, FileMode.Open, FileAccess.Read))
+                {
+                    if (stream.Length < 2147483647)
+                    {
+                        byte[] data = new byte[stream.Length];
+                        stream.Read(data, 0, Convert.ToInt32(stream.Length));
+                        if (cl.LoadFile(Path.GetFileName(d.FileName), data) == true)
+                        {
+                            MessageBox.Show("Loaded");
+                        }
+                        else MessageBox.Show("Error");                        
+                    }
+                }
             }
         }
     }

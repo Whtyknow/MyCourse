@@ -33,6 +33,7 @@
             this.buttonSelectFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonSynchronize = new System.Windows.Forms.Button();
+            this.buttonLoad = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeView
@@ -52,11 +53,11 @@
             // 
             // buttonSelectFolder
             // 
-            this.buttonSelectFolder.Location = new System.Drawing.Point(662, 35);
+            this.buttonSelectFolder.Location = new System.Drawing.Point(639, 35);
             this.buttonSelectFolder.Name = "buttonSelectFolder";
-            this.buttonSelectFolder.Size = new System.Drawing.Size(110, 30);
+            this.buttonSelectFolder.Size = new System.Drawing.Size(133, 30);
             this.buttonSelectFolder.TabIndex = 2;
-            this.buttonSelectFolder.Text = "Select Folder";
+            this.buttonSelectFolder.Text = "Select local folder";
             this.buttonSelectFolder.UseVisualStyleBackColor = true;
             this.buttonSelectFolder.Click += new System.EventHandler(this.buttonSelectFolder_Click);
             // 
@@ -71,19 +72,30 @@
             // 
             // buttonSynchronize
             // 
-            this.buttonSynchronize.Location = new System.Drawing.Point(662, 71);
+            this.buttonSynchronize.Location = new System.Drawing.Point(639, 71);
             this.buttonSynchronize.Name = "buttonSynchronize";
-            this.buttonSynchronize.Size = new System.Drawing.Size(110, 30);
+            this.buttonSynchronize.Size = new System.Drawing.Size(133, 30);
             this.buttonSynchronize.TabIndex = 4;
             this.buttonSynchronize.Text = "Synchoronize";
             this.buttonSynchronize.UseVisualStyleBackColor = true;
             this.buttonSynchronize.Click += new System.EventHandler(this.buttonSynchronize_Click);
             // 
+            // buttonLoad
+            // 
+            this.buttonLoad.Location = new System.Drawing.Point(639, 107);
+            this.buttonLoad.Name = "buttonLoad";
+            this.buttonLoad.Size = new System.Drawing.Size(133, 30);
+            this.buttonLoad.TabIndex = 5;
+            this.buttonLoad.Text = "Load File";
+            this.buttonLoad.UseVisualStyleBackColor = true;
+            this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
+            // 
             // FormDrive
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 332);
+            this.ClientSize = new System.Drawing.Size(784, 309);
+            this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.buttonSynchronize);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonSelectFolder);
@@ -103,5 +115,6 @@
         private System.Windows.Forms.Button buttonSelectFolder;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonSynchronize;
+        private System.Windows.Forms.Button buttonLoad;
     }
 }

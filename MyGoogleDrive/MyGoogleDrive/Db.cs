@@ -27,12 +27,9 @@ namespace MyGoogleDrive
         public string Login { get; set; }
         
         [Required,MaxLength(30), MinLength(3)]        
-        public string Password { get; set; }    
-        
-        public string LocalDirectory { get; set;}
+        public string Password { get; set; }            
 
         public string ServerDirectory { get; set; }
-
 
         public Role Role { get; set; }
     }

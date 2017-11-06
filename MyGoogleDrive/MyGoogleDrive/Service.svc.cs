@@ -63,8 +63,14 @@ namespace MyGoogleDrive
             return true;
         }
 
-        public void LoadFile(string name, byte[] data)
+        public bool LoadFile(string name, byte[] data)
         {
+            
+                using (var fs = new FileStream(currentUser.ServerDirectory+@"\"+name, FileMode.Create, FileAccess.Write))
+                {
+                    fs.Write(data, 0, data.Length);
+                    return true;
+                }           
             
         }
 
@@ -75,17 +81,7 @@ namespace MyGoogleDrive
             UserInfo ui = new UserInfo() { Login = currentUser.Login, LocalDirectory = currentUser.LocalDirectory, ServerDirectory = currentUser.ServerDirectory };
             return ui;
         }
-
-        public void SetUserInfo(UserInfo info)
-        {
-            User u = db.Users.Where(x => x.Login == info.Login).SingleOrDefault();
-            if(u!= null)
-            {
-                u.LocalDirectory = info.LocalDirectory;
-                db.SaveChanges();              
-            }
-        }
-
+        
         public DirectoryInfo GetDirectoryInfo()
         {
             try

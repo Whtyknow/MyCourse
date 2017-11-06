@@ -95,10 +95,10 @@ namespace MyClient.MyGoogleDrive {
     public interface IDrive {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/LoadFile", ReplyAction="http://tempuri.org/IDrive/LoadFileResponse")]
-        void LoadFile(string name, byte[] data);
+        bool LoadFile(string name, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/LoadFile", ReplyAction="http://tempuri.org/IDrive/LoadFileResponse")]
-        System.Threading.Tasks.Task LoadFileAsync(string name, byte[] data);
+        System.Threading.Tasks.Task<bool> LoadFileAsync(string name, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetUserInfo", ReplyAction="http://tempuri.org/IDrive/GetUserInfoResponse")]
         MyClient.MyGoogleDrive.UserInfo GetUserInfo(string login);
@@ -146,11 +146,11 @@ namespace MyClient.MyGoogleDrive {
                 base(binding, remoteAddress) {
         }
         
-        public void LoadFile(string name, byte[] data) {
-            base.Channel.LoadFile(name, data);
+        public bool LoadFile(string name, byte[] data) {
+            return base.Channel.LoadFile(name, data);
         }
         
-        public System.Threading.Tasks.Task LoadFileAsync(string name, byte[] data) {
+        public System.Threading.Tasks.Task<bool> LoadFileAsync(string name, byte[] data) {
             return base.Channel.LoadFileAsync(name, data);
         }
         

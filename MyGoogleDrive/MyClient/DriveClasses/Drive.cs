@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Drawing;
 
 namespace MyClient.DriveClasses
 {
@@ -58,6 +59,30 @@ namespace MyClient.DriveClasses
                 MessageBox.Show(ex.Message);                
             }
             
+        }
+
+        public static void SetUpView(TreeView treeView, ListView listView)
+        {
+            Image[] images1 = new Image[] {
+                Properties.Resources.directory
+            };
+            Image[] images2 = new Image[]{
+                Properties.Resources.directory,
+                Properties.Resources.file
+            };
+
+            ImageList imagelist1 = new ImageList();
+            imagelist1.Images.AddRange(images1);
+            imagelist1.ColorDepth = ColorDepth.Depth32Bit;
+            treeView.ImageList = imagelist1;
+            treeView.ImageIndex = 0;
+            treeView.SelectedImageIndex = 0;
+
+            ImageList imagelist2 = new ImageList();
+            imagelist2.Images.AddRange(images2);
+            imagelist2.ColorDepth = ColorDepth.Depth32Bit;
+            listView.LargeImageList = imagelist2;
+            listView.SmallImageList = imagelist2;
         }
     }
 }
