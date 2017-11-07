@@ -15,6 +15,12 @@ namespace MyClient.MyGoogleDrive {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MyGoogleDrive.IDrive")]
     public interface IDrive {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/Login", ReplyAction="http://tempuri.org/IDrive/LoginResponse")]
+        bool Login([System.ServiceModel.MessageParameterAttribute(Name="login")] string login1, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/Login", ReplyAction="http://tempuri.org/IDrive/LoginResponse")]
+        System.Threading.Tasks.Task<bool> LoginAsync(string login, string password);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/LoadFile", ReplyAction="http://tempuri.org/IDrive/LoadFileResponse")]
         bool LoadFile(string name, byte[] data);
         
@@ -61,6 +67,14 @@ namespace MyClient.MyGoogleDrive {
                 base(binding, remoteAddress) {
         }
         
+        public bool Login(string login1, string password) {
+            return base.Channel.Login(login1, password);
+        }
+        
+        public System.Threading.Tasks.Task<bool> LoginAsync(string login, string password) {
+            return base.Channel.LoginAsync(login, password);
+        }
+        
         public bool LoadFile(string name, byte[] data) {
             return base.Channel.LoadFile(name, data);
         }
@@ -89,12 +103,6 @@ namespace MyClient.MyGoogleDrive {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MyGoogleDrive.IAuth")]
     public interface IAuth {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuth/Login", ReplyAction="http://tempuri.org/IAuth/LoginResponse")]
-        bool Login([System.ServiceModel.MessageParameterAttribute(Name="login")] string login1, string password);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuth/Login", ReplyAction="http://tempuri.org/IAuth/LoginResponse")]
-        System.Threading.Tasks.Task<bool> LoginAsync(string login, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuth/Register", ReplyAction="http://tempuri.org/IAuth/RegisterResponse")]
         bool Register(string login, string password, string role);
@@ -128,14 +136,6 @@ namespace MyClient.MyGoogleDrive {
         
         public AuthClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
-        }
-        
-        public bool Login(string login1, string password) {
-            return base.Channel.Login(login1, password);
-        }
-        
-        public System.Threading.Tasks.Task<bool> LoginAsync(string login, string password) {
-            return base.Channel.LoginAsync(login, password);
         }
         
         public bool Register(string login, string password, string role) {

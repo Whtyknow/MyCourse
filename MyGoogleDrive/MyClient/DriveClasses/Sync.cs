@@ -29,23 +29,23 @@ namespace MyClient.DriveClasses
             }
         }
 
-        public static bool LoadFileOnServer(string path, DriveClient cl)
-        {            
-                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+        public static bool LoadFileOnServer(string path, string fileName, DriveClient cl)
+        {
+            using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+            {
+                if (stream.Length < 2147483647)
                 {
-                    if (stream.Length < 2147483647)
+                    byte[] data = new byte[stream.Length];
+                    stream.Read(data, 0, Convert.ToInt32(stream.Length));
+                    if (cl.LoadFile(fileName, data) == true)
                     {
-                        byte[] data = new byte[stream.Length];
-                        stream.Read(data, 0, Convert.ToInt32(stream.Length));
-                        if (cl.LoadFile(Path.GetFileName(path), data) == true)
-                        {
-                            
+
                         return true;
-                        }                        
                     }
                 }
-            return false;
             }
+            return false;
         }
-    }
+     }
+}
 

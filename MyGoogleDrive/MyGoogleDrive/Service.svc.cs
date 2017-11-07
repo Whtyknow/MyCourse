@@ -7,6 +7,7 @@ using System.ServiceModel.Description;
 using System.ServiceModel.Web;
 using System.Text;
 using System.IO;
+using System.Security;
 
 namespace MyGoogleDrive
 {
@@ -20,22 +21,7 @@ namespace MyGoogleDrive
         public MainService()
         {
             db = new Db();                          
-        }
-
-        public bool Login(string login, string password)
-        {
-            u = db.Users.Where(x => x.Login == login).SingleOrDefault();
-            if (u != null)
-            {
-                if (u.Password == password)
-                {
-                    
-                    return true;
-                     
-                }
-            }
-            return false;
-        }
+        }        
 
         public bool Register(string login, string password, string role)
         {
@@ -63,10 +49,18 @@ namespace MyGoogleDrive
             return true;
         }
 
+        public bool Login(string login, string password)
+        {            
+                u = db.Users.Where(x => x.Login == login).SingleOrDefault();
+                return true;
+            
+        }       
+
         public bool LoadFile(string name, byte[] data)
         {            
             if (u != null)
             {
+                //string location = Path.
                 string path = u.ServerDirectory + @"\" + name;
                 if (!Directory.Exists(path))
                 {

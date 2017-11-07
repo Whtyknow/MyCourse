@@ -30,13 +30,13 @@ namespace MyClient
         //Task t = new Task(Sync);
 
 
-        public FormDrive(string login, string password)
+        public FormDrive(DriveClient cl)
         {
             InitializeComponent();
 
-            cl = new DriveClient(); 
-            cl.ClientCredentials.UserName.UserName = login;
-            cl.ClientCredentials.UserName.Password = password;
+            this.cl = cl;         
+            
+           
 
             Drive.SetUpView(treeView, listView);
 
@@ -111,8 +111,9 @@ namespace MyClient
                 OpenFileDialog d = new OpenFileDialog();
                 if (d.ShowDialog() == DialogResult.OK)
                 {
+                    string fileName = d.FileName.Replace(localDirectory, "");
                     
-                    Sync.LoadFileOnServer(d.FileName, cl);
+                    Sync.LoadFileOnServer(d.FileName, fileName, cl);
                 }
             }
         }

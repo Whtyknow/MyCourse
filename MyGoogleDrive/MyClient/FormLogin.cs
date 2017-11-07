@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyClient.MyGoogleDrive;
+using System.Security;
 
 namespace MyClient
 {
@@ -20,17 +21,23 @@ namespace MyClient
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            AuthClient cl = new AuthClient();
-            string login = textBoxLogin.Text;
-            string password = textBoxPassword.Text;
-            bool res = cl.Login(login, password);
-            if (res)
+            try
             {
-                FormDrive d = new FormDrive(login, password);
+                DriveClient cl = new DriveClient();
+                cl.ClientCredentials.UserName.UserName = textBoxLogin.Text;
+                cl.ClientCredentials.UserName.Password = textBoxPassword.Text;
+                bool res = cl.Login(textBoxLogin.Text, textBoxPassword.Text);
+
+                FormDrive d = new FormDrive(cl);                
                 this.Hide();
                 d.ShowDialog();
                 this.Close();
             }
+            catch(SecurityException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void buttonReset_Click(object sender, EventArgs e)
