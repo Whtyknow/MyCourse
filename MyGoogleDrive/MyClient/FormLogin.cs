@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyClient.MyGoogleDrive;
 using System.Security;
+using System.ServiceModel.Security;
+using System.ServiceModel;
 
 namespace MyClient
 {
@@ -31,11 +33,14 @@ namespace MyClient
                 FormDrive d = new FormDrive(cl);                
                 this.Hide();
                 d.ShowDialog();
+                cl.Close();
                 this.Close();
             }
-            catch(SecurityException ex)
+            catch(MessageSecurityException ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.InnerException.Message);
+                textBoxLogin.Text = string.Empty;
+                textBoxPassword.Text = string.Empty;
             }
             
         }

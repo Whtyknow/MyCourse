@@ -1,7 +1,9 @@
 ﻿using System.IdentityModel.Selectors;
 using System.Security;
 using System.Linq;
-
+using System.ServiceModel.Security;
+using System.IdentityModel.Tokens;
+using System.ServiceModel;
 
 namespace MyGoogleDrive
 {
@@ -10,14 +12,15 @@ namespace MyGoogleDrive
 
         public override void Validate(string login, string password)
         {
+            User u;            
             using (Db db = new Db())
             {
-                User u = db.Users.Where(x => x.Login == login).SingleOrDefault();
+               u = db.Users.Where(x => x.Login == login).SingleOrDefault();
+            }
                 if (u == null || u.Password != password)
                 {
-                    throw new SecurityException("Bad login or password");
-                }                
-            }
+                throw new FaultException("Wrong login or password");
+                }            
         }
     }
 }
