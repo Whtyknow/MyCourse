@@ -33,7 +33,6 @@
             this.listView = new System.Windows.Forms.ListView();
             this.buttonSelectFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.buttonSynchronize = new System.Windows.Forms.Button();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.buttonHome = new System.Windows.Forms.Button();
             this.buttonUP = new System.Windows.Forms.Button();
@@ -73,7 +72,7 @@
             // 
             // buttonSelectFolder
             // 
-            this.buttonSelectFolder.Location = new System.Drawing.Point(819, 26);
+            this.buttonSelectFolder.Location = new System.Drawing.Point(819, 32);
             this.buttonSelectFolder.Name = "buttonSelectFolder";
             this.buttonSelectFolder.Size = new System.Drawing.Size(133, 30);
             this.buttonSelectFolder.TabIndex = 2;
@@ -89,16 +88,6 @@
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "My folder";
-            // 
-            // buttonSynchronize
-            // 
-            this.buttonSynchronize.Location = new System.Drawing.Point(819, 67);
-            this.buttonSynchronize.Name = "buttonSynchronize";
-            this.buttonSynchronize.Size = new System.Drawing.Size(133, 30);
-            this.buttonSynchronize.TabIndex = 4;
-            this.buttonSynchronize.Text = "Synchoronize";
-            this.buttonSynchronize.UseVisualStyleBackColor = true;
-            this.buttonSynchronize.Click += new System.EventHandler(this.buttonSynchronize_Click);
             // 
             // buttonLoad
             // 
@@ -223,7 +212,6 @@
             this.Controls.Add(this.buttonUP);
             this.Controls.Add(this.buttonHome);
             this.Controls.Add(this.buttonLoad);
-            this.Controls.Add(this.buttonSynchronize);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonSelectFolder);
             this.Controls.Add(this.listView);
@@ -242,7 +230,6 @@
         private System.Windows.Forms.ListView listView;
         private System.Windows.Forms.Button buttonSelectFolder;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button buttonSynchronize;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.Button buttonHome;
         private System.Windows.Forms.Button buttonUP;

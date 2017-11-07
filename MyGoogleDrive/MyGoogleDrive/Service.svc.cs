@@ -67,6 +67,11 @@ namespace MyGoogleDrive
         {            
             if (u != null)
             {
+                string path = u.ServerDirectory + @"\" + name;
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
                 using (var fs = new FileStream(u.ServerDirectory + @"\" + name, FileMode.Create, FileAccess.Write))
                 {
                     fs.Write(data, 0, data.Length);
@@ -75,7 +80,12 @@ namespace MyGoogleDrive
             }
             return false;
             
-        }        
+        } 
+        
+        public byte[] DownloadFile(string name)
+        {
+            return new byte[1];
+        }
         
         public DirectoryInfo GetDirectoryInfo()
         {            

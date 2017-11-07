@@ -21,6 +21,12 @@ namespace MyClient.MyGoogleDrive {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/LoadFile", ReplyAction="http://tempuri.org/IDrive/LoadFileResponse")]
         System.Threading.Tasks.Task<bool> LoadFileAsync(string name, byte[] data);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/DownloadFile", ReplyAction="http://tempuri.org/IDrive/DownloadFileResponse")]
+        byte[] DownloadFile(string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/DownloadFile", ReplyAction="http://tempuri.org/IDrive/DownloadFileResponse")]
+        System.Threading.Tasks.Task<byte[]> DownloadFileAsync(string name);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetDirectoryInfo", ReplyAction="http://tempuri.org/IDrive/GetDirectoryInfoResponse")]
         System.IO.DirectoryInfo GetDirectoryInfo();
         
@@ -61,6 +67,14 @@ namespace MyClient.MyGoogleDrive {
         
         public System.Threading.Tasks.Task<bool> LoadFileAsync(string name, byte[] data) {
             return base.Channel.LoadFileAsync(name, data);
+        }
+        
+        public byte[] DownloadFile(string name) {
+            return base.Channel.DownloadFile(name);
+        }
+        
+        public System.Threading.Tasks.Task<byte[]> DownloadFileAsync(string name) {
+            return base.Channel.DownloadFileAsync(name);
         }
         
         public System.IO.DirectoryInfo GetDirectoryInfo() {

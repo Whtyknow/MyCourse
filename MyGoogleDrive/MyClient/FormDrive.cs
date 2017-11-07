@@ -27,7 +27,7 @@ namespace MyClient
 
         string listViewCurrentPath;
 
-        Task t = new Task(Sync);
+        //Task t = new Task(Sync);
 
 
         public FormDrive(string login, string password)
@@ -87,48 +87,36 @@ namespace MyClient
                     }
                 }
             }
-        }
+        }        
 
-        private void buttonSynchronize_Click(object sender, EventArgs e)
-        {
-           
-                
-                Task t = new Task(Sync);
-                t.Start();
-            
-        }
-
-        static private void Sync()
+        static private void Synchr()
         {
             while (true)
             {
                
                 
+                
+
+
+
 
             }
 
         }       
 
         private void buttonLoad_Click(object sender, EventArgs e)
-        {           
-            OpenFileDialog d = new OpenFileDialog();
-            if(d.ShowDialog() == DialogResult.OK)
-            {                
-                using (FileStream stream = new FileStream(d.FileName, FileMode.Open, FileAccess.Read))
+        {
+            if (localDirectory != null || localDirectory != "NULL")
+            {
+                OpenFileDialog d = new OpenFileDialog();
+                if (d.ShowDialog() == DialogResult.OK)
                 {
-                    if (stream.Length < 2147483647)
-                    {
-                        byte[] data = new byte[stream.Length];
-                        stream.Read(data, 0, Convert.ToInt32(stream.Length));
-                        if (cl.LoadFile(Path.GetFileName(d.FileName), data) == true)
-                        {
-                            MessageBox.Show("Loaded");
-                        }
-                        else MessageBox.Show("Error");                        
-                    }
+                    
+                    Sync.LoadFileOnServer(d.FileName, cl);
                 }
             }
         }
+
 
         private void listView_DoubleClick(object sender, EventArgs e)
         {
@@ -458,5 +446,7 @@ namespace MyClient
                 }
             }
         }
+
+        
     }
 }

@@ -23,7 +23,10 @@ namespace MyGoogleDrive
     public interface IDrive
     {
         [OperationContract]
-        bool LoadFile(string name, byte[] data);               
+        bool LoadFile(string name, byte[] data);
+
+        [OperationContract]
+        byte[] DownloadFile(string name); 
 
         [OperationContract]
         DirectoryInfo GetDirectoryInfo();       
