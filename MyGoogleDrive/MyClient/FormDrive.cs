@@ -142,7 +142,7 @@ namespace MyClient
             {
                 info.dirinfo = new DirectoryInfo(listViewCurrentPath);
                 info.dirinfo = info.dirinfo.Parent;
-                if (info.dirinfo == null) throw new Exception("No more higher");
+                if (info.dirinfo == null || info.dirinfo.FullName == localDirectory) throw new Exception("No more higher");
                
                 listViewCurrentPath = info.dirinfo.FullName;
 
