@@ -33,11 +33,11 @@ namespace MyClient.MyGoogleDrive {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/DownloadFile", ReplyAction="http://tempuri.org/IDrive/DownloadFileResponse")]
         System.Threading.Tasks.Task<byte[]> DownloadFileAsync(string name);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetDirectoryInfo", ReplyAction="http://tempuri.org/IDrive/GetDirectoryInfoResponse")]
-        System.IO.DirectoryInfo GetDirectoryInfo();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetFiles", ReplyAction="http://tempuri.org/IDrive/GetFilesResponse")]
+        System.IO.FileInfo[] GetFiles();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetDirectoryInfo", ReplyAction="http://tempuri.org/IDrive/GetDirectoryInfoResponse")]
-        System.Threading.Tasks.Task<System.IO.DirectoryInfo> GetDirectoryInfoAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetFiles", ReplyAction="http://tempuri.org/IDrive/GetFilesResponse")]
+        System.Threading.Tasks.Task<System.IO.FileInfo[]> GetFilesAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -91,12 +91,12 @@ namespace MyClient.MyGoogleDrive {
             return base.Channel.DownloadFileAsync(name);
         }
         
-        public System.IO.DirectoryInfo GetDirectoryInfo() {
-            return base.Channel.GetDirectoryInfo();
+        public System.IO.FileInfo[] GetFiles() {
+            return base.Channel.GetFiles();
         }
         
-        public System.Threading.Tasks.Task<System.IO.DirectoryInfo> GetDirectoryInfoAsync() {
-            return base.Channel.GetDirectoryInfoAsync();
+        public System.Threading.Tasks.Task<System.IO.FileInfo[]> GetFilesAsync() {
+            return base.Channel.GetFilesAsync();
         }
     }
     

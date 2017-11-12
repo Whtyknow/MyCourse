@@ -12,6 +12,7 @@ using System.IO;
 using MyClient.DriveClasses;
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Threading;
 
 namespace MyClient
 {
@@ -25,9 +26,7 @@ namespace MyClient
 
         bool copypaste;
 
-        string listViewCurrentPath;
-
-        //Task t = new Task(Sync);
+        string listViewCurrentPath;       
 
 
         public FormDrive(DriveClient cl)
@@ -53,8 +52,8 @@ namespace MyClient
             }
             else
             {
-                Drive.LoadFolder(localDirectory, treeView, listView);
-                //Task starts here
+                Drive.LoadFolder(localDirectory, treeView, listView);                
+                Task.Run(() => StartSync(cl, localDirectory));
             }            
         }
 
@@ -89,20 +88,61 @@ namespace MyClient
             }
         }        
 
-        static private void Synchr()
+        static private void StartSync(DriveClient cl, string localDirectory)
         {
             while (true)
             {
-               
-                
-                
+                FileInfo[] serverFiles = cl.GetFiles();
+                FileInfo[] localFiles = new DirectoryInfo(localDirectory).GetFiles("*.*", SearchOption.AllDirectories);
+                Synchronize(cl,localFiles, serverFiles , localDirectory);
+                Thread.Sleep(3000);
+            }
+        }
 
-
-
-
+        static private void Synchronize(DriveClient cl, FileInfo[] localFiles, FileInfo[] serverFiles, string localDirectory )
+        {            
+            foreach(FileInfo info in localFiles)
+            {
+                FileInfo temp = serverFiles.Where(x => x.Name == info.Name).Where(x => x.Directory == info.Directory).SingleOrDefault();
+                string fileName = info.FullName.Replace(localDirectory, "");
+                if (temp != null)
+                {                    
+                    if (temp.LastWriteTimeUtc > info.LastWriteTimeUtc)
+                    {                        
+                        Sync.LoadFileOnServer(info.FullName, fileName, cl);                        
+                    }
+                    else
+                    {
+                        Sync.DownloadFileFromServer(fileName, cl);
+                    }
+                }
+                else
+                {
+                    Sync.LoadFileOnServer(info.FullName, fileName, cl);
+                }
             }
 
-        }       
+            foreach(FileInfo info in serverFiles)
+            {
+                FileInfo temp = localFiles.Where(x => x.Name == info.Name).Where(x => x.Directory == info.Directory).SingleOrDefault();
+                string fileName = info.FullName.Replace(localDirectory, "");
+                if (temp != null)
+                {                    
+                    if (temp.LastWriteTimeUtc > info.LastWriteTimeUtc)
+                    {
+                        Sync.DownloadFileFromServer(fileName, cl);
+                    }
+                    else
+                    {
+                        Sync.LoadFileOnServer(temp.FullName, fileName, cl);
+                    }
+                }
+                else
+                {
+                    Sync.DownloadFileFromServer(info.FullName, cl);
+                }
+            }
+        }    
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {

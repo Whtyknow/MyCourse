@@ -31,7 +31,7 @@ namespace MyGoogleDrive
         byte[] DownloadFile(string name); 
 
         [OperationContract]
-        DirectoryInfo GetDirectoryInfo();       
+        FileInfo[] GetFiles();       
         
     }   
 }

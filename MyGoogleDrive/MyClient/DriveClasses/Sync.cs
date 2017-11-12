@@ -18,9 +18,9 @@ namespace MyClient.DriveClasses
                 byte[] data = cl.DownloadFile(path);
                 using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
                 {
-                    fs.Write(data, 0, data.Length);
-                    return true;
+                    fs.Write(data, 0, data.Length);                    
                 }
+                return true;
             }
 
             catch (Exception ex)
@@ -31,6 +31,7 @@ namespace MyClient.DriveClasses
 
         public static bool LoadFileOnServer(string path, string fileName, DriveClient cl)
         {
+            bool flag = false;
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 if (stream.Length < 2147483647)
@@ -39,12 +40,11 @@ namespace MyClient.DriveClasses
                     stream.Read(data, 0, Convert.ToInt32(stream.Length));
                     if (cl.LoadFile(fileName, data) == true)
                     {
-
-                        return true;
+                        flag = true;                       
                     }
                 }
             }
-            return false;
+            return flag;
         }
      }
 }

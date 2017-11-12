@@ -60,17 +60,20 @@ namespace MyGoogleDrive
         {            
             if (u != null)
             {
-                //string location = Path.
-                string path = u.ServerDirectory + @"\" + name;
-                if (!Directory.Exists(path))
+                string path;
+                if (!name.Contains(u.ServerDirectory))
+                    path = u.ServerDirectory + name;
+                else path = name;
+                string folderPath = Path.GetDirectoryName(path);
+                if (!Directory.Exists(folderPath))
                 {
-                    Directory.CreateDirectory(path);
+                    Directory.CreateDirectory(folderPath);
                 }
-                using (var fs = new FileStream(u.ServerDirectory + @"\" + name, FileMode.Create, FileAccess.Write))
+                using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
                 {
-                    fs.Write(data, 0, data.Length);
-                    return true;
+                    fs.Write(data, 0, data.Length);                   
                 }
+                return true;
             }
             return false;
             
@@ -78,17 +81,36 @@ namespace MyGoogleDrive
         
         public byte[] DownloadFile(string name)
         {
-            return new byte[1];
+            if (u != null)
+            {
+                string path;
+                if (!name.Contains(u.ServerDirectory))
+                    path = u.ServerDirectory + name;
+                else path = name;
+                byte[] data = null;
+                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                if (stream.Length < 2147483647)
+                    {
+                    data = new byte[stream.Length];
+                    stream.Read(data, 0, Convert.ToInt32(stream.Length));                    
+                    }
+                }
+                return data;
+            }
+            return null;
         }
+    
         
-        public DirectoryInfo GetDirectoryInfo()
+        public FileInfo[] GetFiles()
         {            
             if (u != null)
             {
                 try
                 {
                     DirectoryInfo d = new DirectoryInfo(u.ServerDirectory);
-                    return d;
+                    FileInfo[] serverFiles = d.GetFiles("*.*", SearchOption.AllDirectories);
+                    return serverFiles;                    
                 }
                 catch (Exception e)
                 {
