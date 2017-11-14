@@ -11,16 +11,7 @@ namespace MyClient.DriveClasses
 {
     static class Drive
     {
-        public static void LoadFolder(string path, TreeView treeView, ListView listView)
-        {
-            DirectoryInfo d = new DirectoryInfo(path);
-            if (d != null)
-            {
-                treeView.Nodes.Add(d.Name);
-                treeView.Nodes[treeView.Nodes.Count - 1].Tag = d.FullName;
-                LoadTreeView(d, treeView.Nodes[treeView.Nodes.Count - 1]);
-            }
-        }
+        
 
         public static void SetUpView(TreeView treeView, ListView listView)
         {
@@ -46,23 +37,25 @@ namespace MyClient.DriveClasses
             listView.SmallImageList = imagelist2;
         }
 
-        public static void LoadTreeView(DirectoryInfo directory, TreeNode node)
+        public static void LoadFolder(string path, TreeView treeView, ListView listView)
+        {
+            DirectoryInfo d = new DirectoryInfo(path);
+            if (d != null)
+            {
+                treeView.Nodes.Add(d.Name);
+                treeView.Nodes[treeView.Nodes.Count - 1].Tag = d.FullName;
+                LoadTreeView(d, treeView.Nodes[treeView.Nodes.Count - 1]);
+            }
+        }
+
+        private static void LoadTreeView(DirectoryInfo directory, TreeNode node)
         {
             foreach(DirectoryInfo dir in directory.GetDirectories())
             {
                 node.Nodes.Add(dir.Name);
                 node.LastNode.Tag = dir.FullName;
                 LoadTreeView(dir, node.LastNode);
-            }
-
-            //string[] dirs = Directory.GetDirectories((string)treeView.SelectedNode.Tag);
-            //foreach (string path in dirs)
-            //{
-            //    info.dirinfo = new DirectoryInfo(path);
-            //    treeView.SelectedNode.Nodes.Add(info.dirinfo.Name);
-            //    treeView.SelectedNode.Nodes[treeView.SelectedNode.Nodes.Count - 1].Tag = path;
-            //}
-            //LoadListView(direct, listView, info);
+            }            
         }
 
         public static void LoadListView(string direct, ListView listView, DataInfo info)

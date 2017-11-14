@@ -181,7 +181,8 @@ namespace MyClient
             {
                 info.dirinfo = new DirectoryInfo(listViewCurrentPath);
                 info.dirinfo = info.dirinfo.Parent;
-                if (info.dirinfo == null || info.dirinfo.FullName == localDirectory) throw new Exception("No more higher");
+                
+                if (info.dirinfo == null || info.dirinfo.Root.FullName == localDirectory) throw new Exception("No more higher");
                
                 listViewCurrentPath = info.dirinfo.FullName;
 
@@ -450,7 +451,7 @@ namespace MyClient
             try
             {               
                 listViewCurrentPath = (string)treeView.SelectedNode.Tag;
-                //Drive.LoadTreeView(listViewCurrentPath, treeView, listView, info);            
+                Drive.LoadListView(listViewCurrentPath, listView, info);           
 
             }
             catch (Exception ex)

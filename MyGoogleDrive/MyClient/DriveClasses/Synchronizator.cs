@@ -15,6 +15,7 @@ namespace MyClient.DriveClasses
         FileInfo[] serverFiles;
         FileInfo[] localFiles;
         string localFolderPath;
+        string localFolderName;
 
         public Synchronizator(DriveClient client, string localFolderPath)
         {
@@ -23,6 +24,7 @@ namespace MyClient.DriveClasses
                 this.client = client;
                 serverFiles = client.GetFiles();
                 this.localFolderPath = localFolderPath;
+                this.localFolderName = localFolderPath.Split(new string[] { "\\" }, StringSplitOptions.None).LastOrDefault();
                 this.localFiles = new DirectoryInfo(localFolderPath).GetFiles("*.*", SearchOption.AllDirectories);
             }
             catch(Exception ex)
@@ -41,7 +43,8 @@ namespace MyClient.DriveClasses
         private void StartLocalSync()
         {
             foreach (FileInfo info in localFiles)
-            {
+            {              
+                    
                 FileInfo temp = serverFiles.Where(x => x.Name == info.Name).Where(x => x.Directory == info.Directory).SingleOrDefault();
                 string fileName = GiveLocalFileName(info.FullName);
                 if (temp != null)
@@ -68,9 +71,10 @@ namespace MyClient.DriveClasses
         }
 
         private string GiveLocalFileName(string fullName)
-        {
-            string fileName = fullName.Replace(localFolderPath, "");
-            return fileName;
+        {            
+            StringBuilder fileName = new StringBuilder(localFolderName);
+            fileName.Append(fullName.Replace(localFolderPath, ""));               
+            return "\\" + fileName.ToString();
         }
     }
 }
