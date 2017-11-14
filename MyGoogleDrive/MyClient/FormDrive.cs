@@ -33,9 +33,7 @@ namespace MyClient
         {
             InitializeComponent();
 
-            this.cl = cl;         
-            
-           
+            this.cl = cl;                  
 
             Drive.SetUpView(treeView, listView);
 
@@ -52,7 +50,7 @@ namespace MyClient
             }
             else
             {
-                Drive.LoadFolder(localDirectory, treeView, listView);                
+                Drive.LoadFolder(localDirectory, treeView, listView);
                 Task.Run(() => StartSync(cl, localDirectory));
             }            
         }
@@ -79,9 +77,8 @@ namespace MyClient
                     FolderBrowserDialog d = new FolderBrowserDialog();
                     if (d.ShowDialog() == DialogResult.OK)
                     {
-                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\MyGoogleDrive", "LocalFolder", d.SelectedPath);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\SOFTWARE\MyGoogleDrive", "LocalFolder", d.SelectedPath);
                         localDirectory = d.SelectedPath;
-
                         Drive.LoadFolder(localDirectory, treeView, listView);
                     }
                 }
@@ -90,11 +87,10 @@ namespace MyClient
 
         static private void StartSync(DriveClient cl, string localDirectory)
         {
+            Synchronizator synchr = new Synchronizator(cl, localDirectory);
             while (true)
             {
-                FileInfo[] serverFiles = cl.GetFiles();
-                FileInfo[] localFiles = new DirectoryInfo(localDirectory).GetFiles("*.*", SearchOption.AllDirectories);
-                Synchronize(cl,localFiles, serverFiles , localDirectory);
+                synchr.StartSync();
                 Thread.Sleep(3000);
             }
         }
@@ -142,7 +138,10 @@ namespace MyClient
                     Sync.DownloadFileFromServer(info.FullName, cl);
                 }
             }
-        }    
+        }
+        
+
+
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
@@ -451,7 +450,7 @@ namespace MyClient
             try
             {               
                 listViewCurrentPath = (string)treeView.SelectedNode.Tag;
-                Drive.LoadTreeView(listViewCurrentPath, treeView, listView, info);            
+                //Drive.LoadTreeView(listViewCurrentPath, treeView, listView, info);            
 
             }
             catch (Exception ex)
