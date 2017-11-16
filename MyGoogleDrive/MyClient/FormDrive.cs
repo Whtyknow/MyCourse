@@ -109,7 +109,7 @@ namespace MyClient
                     }
                     else
                     {
-                        Sync.DownloadFileFromServer(fileName, cl);
+                        Sync.DownloadFileFromServer(localDirectory, fileName, cl);
                     }
                 }
                 else
@@ -126,7 +126,7 @@ namespace MyClient
                 {                    
                     if (temp.LastWriteTimeUtc > info.LastWriteTimeUtc)
                     {
-                        Sync.DownloadFileFromServer(fileName, cl);
+                        Sync.DownloadFileFromServer(localDirectory, fileName, cl);
                     }
                     else
                     {
@@ -135,7 +135,7 @@ namespace MyClient
                 }
                 else
                 {
-                    Sync.DownloadFileFromServer(info.FullName, cl);
+                    Sync.DownloadFileFromServer(localDirectory,info.FullName, cl);
                 }
             }
         }

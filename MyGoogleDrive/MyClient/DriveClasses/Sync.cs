@@ -11,12 +11,12 @@ namespace MyClient.DriveClasses
 {
      static class Sync
     {
-        public static bool DownloadFileFromServer(string path, DriveClient cl)
+        public static bool DownloadFileFromServer(string savePath, string serverFileName, DriveClient cl)
         {
             try
             {
-                byte[] data = cl.DownloadFile(path);
-                using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+                byte[] data = cl.DownloadFile(serverFileName);                
+                using (var fs = new FileStream(savePath, FileMode.Create, FileAccess.Write))
                 {
                     fs.Write(data, 0, data.Length);                    
                 }

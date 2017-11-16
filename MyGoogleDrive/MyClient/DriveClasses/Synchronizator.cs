@@ -35,27 +35,28 @@ namespace MyClient.DriveClasses
 
         public void StartSync()
         {
-            StartLocalSync();
-            //StartServerSync();
+            //StartLocalSync();
+            StartServerSync();
         }
 
 
         private void StartLocalSync()
         {
             foreach (FileInfo info in localFiles)
-            {              
-                    
+            {
+
                 FileInfo temp = serverFiles.Where(x => x.Name == info.Name).Where(x => x.Directory == info.Directory).SingleOrDefault();
-                string fileName = GiveLocalFileName(info.FullName);
+                string fileName = GiveFileName(info.FullName);
                 if (temp != null)
                 {
                     if (temp.LastWriteTimeUtc > info.LastWriteTimeUtc)
                     {
                         Sync.LoadFileOnServer(info.FullName, fileName, client);
+                            
                     }
                     else
                     {
-                        Sync.DownloadFileFromServer(fileName, client);
+                        Sync.DownloadFileFromServer(localFolderPath + GiveFileName(fileName), fileName, client);
                     }
                 }
                 else
@@ -67,14 +68,39 @@ namespace MyClient.DriveClasses
 
         private void StartServerSync()
         {
-
+            foreach (FileInfo info in serverFiles)
+            {
+                FileInfo temp = localFiles.Where(x => x.Name == info.Name).Where(x => x.Directory == info.Directory).SingleOrDefault();
+                
+                if(temp == null)
+                {
+                    Sync.DownloadFileFromServer(localFolderPath + GiveFileName(info.FullName), GiveFileName(info.FullName), client);
+                }
+                else if(temp.LastWriteTimeUtc > info.LastWriteTimeUtc)
+                {
+                    Sync.LoadFileOnServer(temp.FullName, GiveFileName(temp.FullName), client);
+                }
+                else
+                {
+                    Sync.DownloadFileFromServer(localFolderPath, GiveFileName(info.FullName), client);
+                }
+            }
         }
 
-        private string GiveLocalFileName(string fullName)
-        {            
-            StringBuilder fileName = new StringBuilder(localFolderName);
-            fileName.Append(fullName.Replace(localFolderPath, ""));               
-            return "\\" + fileName.ToString();
+        private string GiveFileName(string fullName)
+        {
+            if (fullName.Contains(localFolderPath))
+            {
+                StringBuilder fileName = new StringBuilder(localFolderName);
+                fileName.Append(fullName.Replace(localFolderPath, ""));
+                return "\\" + fileName.ToString();
+            }
+            else
+            {
+                string fileName = fullName.Substring(fullName.IndexOf(localFolderName));
+                return fileName;
+                
+            }            
         }
     }
 }
