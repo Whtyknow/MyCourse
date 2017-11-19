@@ -56,7 +56,8 @@ namespace MyGoogleDrive
         {            
             if (u != null)
             {
-                string path = name;               
+                string path = u.ServerDirectory + name;               
+
                 string folderPath = Path.GetDirectoryName(path);
                 if (!Directory.Exists(folderPath))
                 {

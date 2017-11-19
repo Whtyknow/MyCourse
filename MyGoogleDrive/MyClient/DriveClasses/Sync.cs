@@ -31,20 +31,21 @@ namespace MyClient.DriveClasses
 
         public static bool LoadFileOnServer(string path, string fileName, DriveClient cl)
         {
-            bool flag = false;
+            byte[] data = null;
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
                 if (stream.Length < 2147483647)
                 {
-                    byte[] data = new byte[stream.Length];
+                    data = new byte[stream.Length];
                     stream.Read(data, 0, Convert.ToInt32(stream.Length));
-                    if (cl.LoadFile(fileName, data) == true)
-                    {
-                        flag = true;                       
-                    }
                 }
             }
-            return flag;
+            if (data != null)
+            {
+                cl.LoadFile(fileName, data);
+                return true;
+            }
+            return false;
         }
      }
 }
