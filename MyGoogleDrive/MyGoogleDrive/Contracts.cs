@@ -12,9 +12,8 @@ namespace MyGoogleDrive
     [ServiceContract]
     public interface IAuth
     {       
-
         [OperationContract]
-        bool Register(string login, string password, string role);      
+        string Register(string login, string password, string role);      
     }    
 
     [ServiceContract]
@@ -25,13 +24,13 @@ namespace MyGoogleDrive
         bool Login(string login, string password);        
 
         [OperationContract]
-        bool LoadFile(string name, byte[] data);
+        bool LoadFile(string path, byte[] data);
 
         [OperationContract]
-        byte[] DownloadFile(string name); 
+        byte[] DownloadFile(string path); 
 
         [OperationContract]
-        FileInfo[] GetFiles();       
+        List<FInfo> GetFilesInfo();       
         
     }   
 }

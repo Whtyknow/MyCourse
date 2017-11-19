@@ -108,6 +108,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FInfo.cs" />
     <Compile Include="UserNameValidator.cs" />
     <Compile Include="Db.cs" />
     <Compile Include="Service.svc.cs">

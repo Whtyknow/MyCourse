@@ -21,12 +21,10 @@ namespace MyClient
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AuthClient cl = new AuthClient();
-            
-            bool res = cl.Register(textBoxLogin.Text, textBoxPassword.Text, Convert.ToString(comboBoxRole.SelectedItem));
-
-            if (res == true) MessageBox.Show("Registered");
-            else MessageBox.Show("Something went wrong");
+            AuthClient cl = new AuthClient();            
+            string res = cl.Register(textBoxLogin.Text, textBoxPassword.Text, Convert.ToString(comboBoxRole.SelectedItem));
+            cl.Close();
+            MessageBox.Show(res);
             this.Close();
         }
     }

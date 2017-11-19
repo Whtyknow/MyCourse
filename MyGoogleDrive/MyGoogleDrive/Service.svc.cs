@@ -23,30 +23,26 @@ namespace MyGoogleDrive
             db = new Db();                          
         }        
 
-        public bool Register(string login, string password, string role)
-        {
-            try
-            {
+        public string Register(string login, string password, string role)
+        {           
+
                 if (db.Users.Where(x => x.Login == login).SingleOrDefault() == null)
                 {
                     Role r = db.Roles.Where(x => x.Name == role).SingleOrDefault();
                     string serverdir = Directory.GetCurrentDirectory() + string.Format("\\UserData\\{0}", login);
-                    if(!Directory.Exists(Directory.GetCurrentDirectory() + "\\UserData")) Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\UserData");
+                    if (!Directory.Exists(Directory.GetCurrentDirectory() + "\\UserData")) Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\UserData");
                     Directory.CreateDirectory(serverdir);
                     User u = new User() { Login = login, Password = password, Role = r, ServerDirectory = serverdir };
                     db.Users.Add(u);
                     db.SaveChanges();
+                    db.Dispose();
                 }
                 else
                 {
-                    return false;
+                    return "User with this login exists";
                 }
-            }
-            catch(Exception e)
-            {
-                return false;
-            }
-            return true;
+                return "Registered";           
+                    
         }
 
         public bool Login(string login, string password)
@@ -60,10 +56,7 @@ namespace MyGoogleDrive
         {            
             if (u != null)
             {
-                string path;
-                if (!name.Contains(u.ServerDirectory))
-                    path = u.ServerDirectory + name;
-                else path = name;
+                string path = name;               
                 string folderPath = Path.GetDirectoryName(path);
                 if (!Directory.Exists(folderPath))
                 {
@@ -75,18 +68,14 @@ namespace MyGoogleDrive
                 }
                 return true;
             }
-            return false;
-            
+            return false;            
         } 
         
         public byte[] DownloadFile(string name)
         {
             if (u != null)
             {
-                string path;
-                if (!name.Contains(u.ServerDirectory))
-                    path = u.ServerDirectory + name;
-                else path = name;
+                string path = name;
                 byte[] data = null;
                 using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
                 {
@@ -102,22 +91,21 @@ namespace MyGoogleDrive
         }
     
         
-        public FileInfo[] GetFiles()
+        public List<FInfo> GetFilesInfo()
         {            
             if (u != null)
             {
-                try
-                {
-                    DirectoryInfo d = new DirectoryInfo(u.ServerDirectory);
-                    FileInfo[] serverFiles = d.GetFiles("*.*", SearchOption.AllDirectories);
-                    return serverFiles;                    
-                }
-                catch (Exception e)
-                {
-                    return null;
-                }
+                
+                    DirectoryInfo dir = new DirectoryInfo(u.ServerDirectory);
+                    FileInfo[] serverFiles = dir.GetFiles("*.*", SearchOption.AllDirectories);
+                    List<FInfo> filesList = new List<FInfo>();
+                    foreach(FileInfo fileInfo in serverFiles)
+                    {
+                        filesList.Add(new FInfo() { Name = fileInfo.Name, Path = fileInfo.FullName.Replace(u.ServerDirectory, ""), LastWriteTime = fileInfo.LastWriteTimeUtc });
+                    }
+                    return filesList;                    
             }
             return null;
-        }
+        }        
     }   
 }

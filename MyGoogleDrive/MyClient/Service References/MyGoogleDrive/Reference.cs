@@ -9,7 +9,86 @@
 //------------------------------------------------------------------------------
 
 namespace MyClient.MyGoogleDrive {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FInfo", Namespace="http://schemas.datacontract.org/2004/07/MyGoogleDrive")]
+    [System.SerializableAttribute()]
+    public partial class FInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime LastWriteTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PathField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime LastWriteTime {
+            get {
+                return this.LastWriteTimeField;
+            }
+            set {
+                if ((this.LastWriteTimeField.Equals(value) != true)) {
+                    this.LastWriteTimeField = value;
+                    this.RaisePropertyChanged("LastWriteTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Path {
+            get {
+                return this.PathField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PathField, value) != true)) {
+                    this.PathField = value;
+                    this.RaisePropertyChanged("Path");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MyGoogleDrive.IDrive")]
@@ -22,22 +101,22 @@ namespace MyClient.MyGoogleDrive {
         System.Threading.Tasks.Task<bool> LoginAsync(string login, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/LoadFile", ReplyAction="http://tempuri.org/IDrive/LoadFileResponse")]
-        bool LoadFile(string name, byte[] data);
+        bool LoadFile(string path, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/LoadFile", ReplyAction="http://tempuri.org/IDrive/LoadFileResponse")]
-        System.Threading.Tasks.Task<bool> LoadFileAsync(string name, byte[] data);
+        System.Threading.Tasks.Task<bool> LoadFileAsync(string path, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/DownloadFile", ReplyAction="http://tempuri.org/IDrive/DownloadFileResponse")]
-        byte[] DownloadFile(string name);
+        byte[] DownloadFile(string path);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/DownloadFile", ReplyAction="http://tempuri.org/IDrive/DownloadFileResponse")]
-        System.Threading.Tasks.Task<byte[]> DownloadFileAsync(string name);
+        System.Threading.Tasks.Task<byte[]> DownloadFileAsync(string path);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetFiles", ReplyAction="http://tempuri.org/IDrive/GetFilesResponse")]
-        System.IO.FileInfo[] GetFiles();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetFilesInfo", ReplyAction="http://tempuri.org/IDrive/GetFilesInfoResponse")]
+        System.Collections.Generic.List<MyClient.MyGoogleDrive.FInfo> GetFilesInfo();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetFiles", ReplyAction="http://tempuri.org/IDrive/GetFilesResponse")]
-        System.Threading.Tasks.Task<System.IO.FileInfo[]> GetFilesAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetFilesInfo", ReplyAction="http://tempuri.org/IDrive/GetFilesInfoResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.List<MyClient.MyGoogleDrive.FInfo>> GetFilesInfoAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -75,28 +154,28 @@ namespace MyClient.MyGoogleDrive {
             return base.Channel.LoginAsync(login, password);
         }
         
-        public bool LoadFile(string name, byte[] data) {
-            return base.Channel.LoadFile(name, data);
+        public bool LoadFile(string path, byte[] data) {
+            return base.Channel.LoadFile(path, data);
         }
         
-        public System.Threading.Tasks.Task<bool> LoadFileAsync(string name, byte[] data) {
-            return base.Channel.LoadFileAsync(name, data);
+        public System.Threading.Tasks.Task<bool> LoadFileAsync(string path, byte[] data) {
+            return base.Channel.LoadFileAsync(path, data);
         }
         
-        public byte[] DownloadFile(string name) {
-            return base.Channel.DownloadFile(name);
+        public byte[] DownloadFile(string path) {
+            return base.Channel.DownloadFile(path);
         }
         
-        public System.Threading.Tasks.Task<byte[]> DownloadFileAsync(string name) {
-            return base.Channel.DownloadFileAsync(name);
+        public System.Threading.Tasks.Task<byte[]> DownloadFileAsync(string path) {
+            return base.Channel.DownloadFileAsync(path);
         }
         
-        public System.IO.FileInfo[] GetFiles() {
-            return base.Channel.GetFiles();
+        public System.Collections.Generic.List<MyClient.MyGoogleDrive.FInfo> GetFilesInfo() {
+            return base.Channel.GetFilesInfo();
         }
         
-        public System.Threading.Tasks.Task<System.IO.FileInfo[]> GetFilesAsync() {
-            return base.Channel.GetFilesAsync();
+        public System.Threading.Tasks.Task<System.Collections.Generic.List<MyClient.MyGoogleDrive.FInfo>> GetFilesInfoAsync() {
+            return base.Channel.GetFilesInfoAsync();
         }
     }
     
@@ -105,10 +184,10 @@ namespace MyClient.MyGoogleDrive {
     public interface IAuth {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuth/Register", ReplyAction="http://tempuri.org/IAuth/RegisterResponse")]
-        bool Register(string login, string password, string role);
+        string Register(string login, string password, string role);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuth/Register", ReplyAction="http://tempuri.org/IAuth/RegisterResponse")]
-        System.Threading.Tasks.Task<bool> RegisterAsync(string login, string password, string role);
+        System.Threading.Tasks.Task<string> RegisterAsync(string login, string password, string role);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -138,11 +217,11 @@ namespace MyClient.MyGoogleDrive {
                 base(binding, remoteAddress) {
         }
         
-        public bool Register(string login, string password, string role) {
+        public string Register(string login, string password, string role) {
             return base.Channel.Register(login, password, role);
         }
         
-        public System.Threading.Tasks.Task<bool> RegisterAsync(string login, string password, string role) {
+        public System.Threading.Tasks.Task<string> RegisterAsync(string login, string password, string role) {
             return base.Channel.RegisterAsync(login, password, role);
         }
     }

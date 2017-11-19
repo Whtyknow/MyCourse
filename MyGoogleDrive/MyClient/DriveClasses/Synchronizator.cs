@@ -12,7 +12,7 @@ namespace MyClient.DriveClasses
     internal class Synchronizator
     {
         DriveClient client;        
-        FileInfo[] serverFiles;
+        List<FInfo> serverFiles;
         FileInfo[] localFiles;
         string localFolderPath;
         string localFolderName;
@@ -22,10 +22,8 @@ namespace MyClient.DriveClasses
             try
             {
                 this.client = client;
-                serverFiles = client.GetFiles();
-                this.localFolderPath = localFolderPath;
-                this.localFolderName = localFolderPath.Split(new string[] { "\\" }, StringSplitOptions.None).LastOrDefault();
-                this.localFiles = new DirectoryInfo(localFolderPath).GetFiles("*.*", SearchOption.AllDirectories);
+                serverFiles = client.GetFilesInfo();
+                this.localFolderPath = localFolderPath;                
             }
             catch(Exception ex)
             {
@@ -35,7 +33,7 @@ namespace MyClient.DriveClasses
 
         public void StartSync()
         {
-            //StartLocalSync();
+            StartLocalSync();
             StartServerSync();
         }
 
@@ -44,24 +42,22 @@ namespace MyClient.DriveClasses
         {
             foreach (FileInfo info in localFiles)
             {
-
-                FileInfo temp = serverFiles.Where(x => x.Name == info.Name).Where(x => x.Directory == info.Directory).SingleOrDefault();
-                string fileName = GiveFileName(info.FullName);
+                string filePath = GiveLocalPath(info.FullName);
+                FInfo temp = serverFiles.Where(x => x.Path == filePath).SingleOrDefault();               
                 if (temp != null)
                 {
-                    if (temp.LastWriteTimeUtc > info.LastWriteTimeUtc)
+                    if (temp.LastWriteTime > info.LastWriteTimeUtc)
                     {
-                        Sync.LoadFileOnServer(info.FullName, fileName, client);
-                            
+                        Sync.LoadFileOnServer(info.FullName, filePath, client);                            
                     }
                     else
                     {
-                        Sync.DownloadFileFromServer(localFolderPath + GiveFileName(fileName), fileName, client);
+                        Sync.DownloadFileFromServer(localFolderPath + filePath, filePath, client);
                     }
                 }
                 else
                 {
-                    Sync.LoadFileOnServer(info.FullName, fileName, client);
+                    Sync.LoadFileOnServer(info.FullName, filePath, client);
                 }
             }
         }
@@ -87,20 +83,13 @@ namespace MyClient.DriveClasses
             }
         }
 
-        private string GiveFileName(string fullName)
+        private string GiveLocalPath(string fullName)
         {
-            if (fullName.Contains(localFolderPath))
-            {
+           
                 StringBuilder fileName = new StringBuilder(localFolderName);
                 fileName.Append(fullName.Replace(localFolderPath, ""));
-                return "\\" + fileName.ToString();
-            }
-            else
-            {
-                string fileName = fullName.Substring(fullName.IndexOf(localFolderName));
-                return fileName;
-                
-            }            
+                return fileName.ToString();           
+                      
         }
     }
 }

@@ -17,10 +17,10 @@ namespace MyGoogleDrive
             {
                u = db.Users.Where(x => x.Login == login).SingleOrDefault();
             }
-                if (u == null || u.Password != password)
-                {
+            if (u == null || u.Password != password)
+            {
                 throw new FaultException("Wrong login or password");
-                }            
+            }            
         }
     }
 }

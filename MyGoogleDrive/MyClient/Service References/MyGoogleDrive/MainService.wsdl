@@ -224,7 +224,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="Drive_GetFiles_Input_policy">
+  <wsp:Policy wsu:Id="Drive_GetFilesInfo_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -243,7 +243,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="Drive_GetFiles_output_policy">
+  <wsp:Policy wsu:Id="Drive_GetFilesInfo_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -400,7 +400,7 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:6351/Service.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:6351/Service.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:6351/Service.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System.IO" />
+      <xsd:import schemaLocation="http://localhost:6351/Service.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/MyGoogleDrive" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IDrive_Login_InputMessage">
@@ -421,11 +421,11 @@
   <wsdl:message name="IDrive_DownloadFile_OutputMessage">
     <wsdl:part name="parameters" element="tns:DownloadFileResponse" />
   </wsdl:message>
-  <wsdl:message name="IDrive_GetFiles_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetFiles" />
+  <wsdl:message name="IDrive_GetFilesInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFilesInfo" />
   </wsdl:message>
-  <wsdl:message name="IDrive_GetFiles_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetFilesResponse" />
+  <wsdl:message name="IDrive_GetFilesInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFilesInfoResponse" />
   </wsdl:message>
   <wsdl:message name="IAuth_Register_InputMessage">
     <wsdl:part name="parameters" element="tns:Register" />
@@ -446,9 +446,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IDrive/DownloadFile" message="tns:IDrive_DownloadFile_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IDrive/DownloadFileResponse" message="tns:IDrive_DownloadFile_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetFiles">
-      <wsdl:input wsaw:Action="http://tempuri.org/IDrive/GetFiles" message="tns:IDrive_GetFiles_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IDrive/GetFilesResponse" message="tns:IDrive_GetFiles_OutputMessage" />
+    <wsdl:operation name="GetFilesInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDrive/GetFilesInfo" message="tns:IDrive_GetFilesInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IDrive/GetFilesInfoResponse" message="tns:IDrive_GetFilesInfo_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IAuth">
@@ -493,14 +493,14 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetFiles">
-      <soap12:operation soapAction="http://tempuri.org/IDrive/GetFiles" style="document" />
+    <wsdl:operation name="GetFilesInfo">
+      <soap12:operation soapAction="http://tempuri.org/IDrive/GetFilesInfo" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#Drive_GetFiles_Input_policy" />
+        <wsp:PolicyReference URI="#Drive_GetFilesInfo_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#Drive_GetFiles_output_policy" />
+        <wsp:PolicyReference URI="#Drive_GetFilesInfo_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
