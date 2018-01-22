@@ -11,7 +11,7 @@ namespace MyClient.DriveClasses
 {
      static class Loader
     {
-        public static bool DownloadFileFromServer(string savePath, string serverFileName, FInfo finfo, DriveClient cl)
+        public static bool DownloadFileFromServer(string savePath, string serverFileName, DateTime LastWriteTime, DriveClient cl)
         {
             try
             {
@@ -21,8 +21,8 @@ namespace MyClient.DriveClasses
                     fs.Write(data, 0, data.Length);                    
                 }
 
-                FileInfo downloadedFile = new FileInfo(savePath);                
-                downloadedFile.LastWriteTimeUtc = finfo.LastWriteTime;
+                FileInfo downloadedFile = new FileInfo(savePath);
+                downloadedFile.LastWriteTimeUtc = LastWriteTime;
 
                 return true;
             }
@@ -33,7 +33,7 @@ namespace MyClient.DriveClasses
             }
         }
 
-        public static bool LoadFileOnServer(string path, string fileName, DriveClient cl)
+        public static bool LoadFileOnServer(string path, string fileName, DateTime LastWriteTime, DriveClient cl)
         {
             byte[] data = null;
             using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
@@ -50,7 +50,8 @@ namespace MyClient.DriveClasses
 
                 FInfo loadedFileInfo = new FInfo() { Name = fileName, Path = path, LastWriteTime = loadedFile.LastWriteTimeUtc };
 
-                cl.LoadFile(fileName, data, loadedFileInfo);
+                cl.LoadFile(fileName, data);
+                cl.SetFileInfo(fileName, new FInfo() { LastWriteTime = LastWriteTime });
                 return true;
             }
             return false;

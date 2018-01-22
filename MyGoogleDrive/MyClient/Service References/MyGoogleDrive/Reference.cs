@@ -101,10 +101,10 @@ namespace MyClient.MyGoogleDrive {
         System.Threading.Tasks.Task<bool> LoginAsync(string login, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/LoadFile", ReplyAction="http://tempuri.org/IDrive/LoadFileResponse")]
-        bool LoadFile(string path, byte[] data, MyClient.MyGoogleDrive.FInfo info);
+        bool LoadFile(string path, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/LoadFile", ReplyAction="http://tempuri.org/IDrive/LoadFileResponse")]
-        System.Threading.Tasks.Task<bool> LoadFileAsync(string path, byte[] data, MyClient.MyGoogleDrive.FInfo info);
+        System.Threading.Tasks.Task<bool> LoadFileAsync(string path, byte[] data);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/DownloadFile", ReplyAction="http://tempuri.org/IDrive/DownloadFileResponse")]
         byte[] DownloadFile(string path);
@@ -117,6 +117,12 @@ namespace MyClient.MyGoogleDrive {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/GetFilesInfo", ReplyAction="http://tempuri.org/IDrive/GetFilesInfoResponse")]
         System.Threading.Tasks.Task<System.Collections.Generic.List<MyClient.MyGoogleDrive.FInfo>> GetFilesInfoAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/SetFileInfo", ReplyAction="http://tempuri.org/IDrive/SetFileInfoResponse")]
+        bool SetFileInfo(string fileName, MyClient.MyGoogleDrive.FInfo info);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrive/SetFileInfo", ReplyAction="http://tempuri.org/IDrive/SetFileInfoResponse")]
+        System.Threading.Tasks.Task<bool> SetFileInfoAsync(string fileName, MyClient.MyGoogleDrive.FInfo info);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -154,12 +160,12 @@ namespace MyClient.MyGoogleDrive {
             return base.Channel.LoginAsync(login, password);
         }
         
-        public bool LoadFile(string path, byte[] data, MyClient.MyGoogleDrive.FInfo info) {
-            return base.Channel.LoadFile(path, data, info);
+        public bool LoadFile(string path, byte[] data) {
+            return base.Channel.LoadFile(path, data);
         }
         
-        public System.Threading.Tasks.Task<bool> LoadFileAsync(string path, byte[] data, MyClient.MyGoogleDrive.FInfo info) {
-            return base.Channel.LoadFileAsync(path, data, info);
+        public System.Threading.Tasks.Task<bool> LoadFileAsync(string path, byte[] data) {
+            return base.Channel.LoadFileAsync(path, data);
         }
         
         public byte[] DownloadFile(string path) {
@@ -176,6 +182,14 @@ namespace MyClient.MyGoogleDrive {
         
         public System.Threading.Tasks.Task<System.Collections.Generic.List<MyClient.MyGoogleDrive.FInfo>> GetFilesInfoAsync() {
             return base.Channel.GetFilesInfoAsync();
+        }
+        
+        public bool SetFileInfo(string fileName, MyClient.MyGoogleDrive.FInfo info) {
+            return base.Channel.SetFileInfo(fileName, info);
+        }
+        
+        public System.Threading.Tasks.Task<bool> SetFileInfoAsync(string fileName, MyClient.MyGoogleDrive.FInfo info) {
+            return base.Channel.SetFileInfoAsync(fileName, info);
         }
     }
     

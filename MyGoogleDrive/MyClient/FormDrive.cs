@@ -26,7 +26,7 @@ namespace MyClient
 
         bool copypaste;
 
-        string listViewCurrentPath;       
+        string listViewCurrentPath = null;
 
 
         public FormDrive(DriveClient cl)
@@ -95,28 +95,6 @@ namespace MyClient
             }
         }
 
-        static private void Synchronize(DriveClient cl, FileInfo[] localFiles, FileInfo[] serverFiles, string localDirectory )
-        {            
-            
-        }
-        
-
-
-
-        private void buttonLoad_Click(object sender, EventArgs e)
-        {
-            if (localDirectory != null || localDirectory != "NULL")
-            {
-                OpenFileDialog d = new OpenFileDialog();
-                if (d.ShowDialog() == DialogResult.OK)
-                {
-                    string fileName = d.FileName.Replace(localDirectory, "");
-                    
-                    Loader.LoadFileOnServer(d.FileName, fileName, cl);
-                }
-            }
-        }
-
 
         private void listView_DoubleClick(object sender, EventArgs e)
         {
@@ -139,10 +117,12 @@ namespace MyClient
 
             try
             {
-                info.dirinfo = new DirectoryInfo(listViewCurrentPath);
-                info.dirinfo = info.dirinfo.Parent;
                 
-                if (info.dirinfo == null || info.dirinfo.Root.FullName == localDirectory) throw new Exception("No more higher");
+                info.dirinfo = new DirectoryInfo(listViewCurrentPath);
+
+                if (info.dirinfo == null || info.dirinfo.FullName == localDirectory) throw new Exception("No more higher");
+
+                info.dirinfo = info.dirinfo.Parent;                                
                
                 listViewCurrentPath = info.dirinfo.FullName;
 
@@ -425,6 +405,7 @@ namespace MyClient
             if (localDirectory != "NULL")
             {
                 info.dirinfo = new DirectoryInfo(localDirectory);
+                listViewCurrentPath = info.dirinfo.FullName;
 
                 listView.Items.Clear();
                 string[] dirs = Directory.GetDirectories(info.dirinfo.FullName);

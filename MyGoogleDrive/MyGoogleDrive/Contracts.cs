@@ -24,13 +24,15 @@ namespace MyGoogleDrive
         bool Login(string login, string password);        
 
         [OperationContract]
-        bool LoadFile(string path, byte[] data, FInfo info);
+        bool LoadFile(string path, byte[] data);
 
         [OperationContract]
         byte[] DownloadFile(string path); 
 
         [OperationContract]
-        List<FInfo> GetFilesInfo();       
-        
+        List<FInfo> GetFilesInfo();
+
+        [OperationContract]
+        bool SetFileInfo(string fileName, FInfo info);
     }   
 }

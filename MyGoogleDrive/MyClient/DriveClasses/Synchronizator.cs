@@ -36,7 +36,7 @@ namespace MyClient.DriveClasses
             serverFiles = client.GetFilesInfo();            
             localFiles = localDir.GetFiles("*.*", SearchOption.AllDirectories);
             StartLocalSync();
-            //StartServerSync();
+            StartServerSync();
         }
 
 
@@ -45,48 +45,58 @@ namespace MyClient.DriveClasses
             foreach (FileInfo info in localFiles)
             {
                 string filePath = GiveLocalPath(info.FullName);
-                FInfo finfo = serverFiles.Where(x => x.Path == filePath).SingleOrDefault();               
-                if (finfo != null)
+                FInfo serverFile = serverFiles.Where(x => x.Path == filePath).SingleOrDefault();               
+                if (serverFile != null)
                 {
-                    if (finfo.LastWriteTime == info.LastWriteTimeUtc) continue;
+                    if (serverFile.LastWriteTime == info.LastWriteTimeUtc) continue;
 
-
-                    if (finfo.LastWriteTime < info.LastWriteTimeUtc)
+                    if (serverFile.LastWriteTime < info.LastWriteTimeUtc)
                     {
-                        Loader.LoadFileOnServer(info.FullName, filePath, client);                            
+                        Loader.LoadFileOnServer(info.FullName, filePath, info.LastWriteTimeUtc, client);                            
                     }
                     else
                     {
-                        Loader.DownloadFileFromServer(localFolderPath + filePath, filePath, finfo,  client);
+                        string savePath = localFolderPath + filePath;
+                        Loader.DownloadFileFromServer(savePath, filePath, serverFile.LastWriteTime, client);                       
                     }
                 }
                 else
                 {
-                    Loader.LoadFileOnServer(info.FullName, filePath, client);
+                    Loader.LoadFileOnServer(info.FullName, filePath, info.LastWriteTimeUtc, client);
                 }
             }
         }
 
-        //private void StartServerSync()
-        //{
-        //    foreach (FileInfo info in serverFiles)
-        //    {
-        //        FileInfo temp = localFiles.Where(x => x.Name == info.Name).Where(x => x.Directory == info.Directory).SingleOrDefault();
+        private void StartServerSync()
+        {
+            foreach (FInfo info in serverFiles)
+            {                
+
+                FileInfo localFile = localFiles.Where(x => GiveLocalPath(x.FullName) == info.Path).SingleOrDefault();
                 
-        //        if(temp == null)
-        //        {
-        //            Sync.DownloadFileFromServer(localFolderPath + GiveFileName(info.FullName), GiveFileName(info.FullName), client);
-        //        }
-        //        else if(temp.LastWriteTimeUtc > info.LastWriteTimeUtc)
-        //        {
-        //            Sync.LoadFileOnServer(temp.FullName, GiveFileName(temp.FullName), client);
-        //        }
-        //        else
-        //        {
-        //            Sync.DownloadFileFromServer(localFolderPath, GiveFileName(info.FullName), client);
-        //        }
-        //    }
-        //}
+
+                if (localFile != null)
+                {
+                    if (localFile.LastWriteTimeUtc == info.LastWriteTime) continue;                    
+
+                    if (localFile.LastWriteTimeUtc < info.LastWriteTime)
+                    {                        
+                        Loader.DownloadFileFromServer(localFolderPath + info.Path, info.Path, info.LastWriteTime, client);
+                        
+                    }
+                    else
+                    {
+                            string localPath = GiveLocalPath(localFile.FullName);
+                            Loader.LoadFileOnServer(localFile.FullName, localPath, localFile.LastWriteTimeUtc, client);
+                            
+                    }
+                }
+                else
+                {
+                    Loader.DownloadFileFromServer(localFolderPath + info.Path, info.Path, info.LastWriteTime, client);
+                }
+            }
+        }
 
         private string GiveLocalPath(string fullName)
         {                      

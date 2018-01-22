@@ -33,7 +33,6 @@
             this.listView = new System.Windows.Forms.ListView();
             this.buttonSelectFolder = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.buttonLoad = new System.Windows.Forms.Button();
             this.buttonHome = new System.Windows.Forms.Button();
             this.buttonUP = new System.Windows.Forms.Button();
             this.richTextBoxFileInfo = new System.Windows.Forms.RichTextBox();
@@ -88,16 +87,6 @@
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "My folder";
-            // 
-            // buttonLoad
-            // 
-            this.buttonLoad.Location = new System.Drawing.Point(819, 103);
-            this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(133, 30);
-            this.buttonLoad.TabIndex = 5;
-            this.buttonLoad.Text = "Load File";
-            this.buttonLoad.UseVisualStyleBackColor = true;
-            this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
             // 
             // buttonHome
             // 
@@ -211,7 +200,6 @@
             this.Controls.Add(this.richTextBoxFileInfo);
             this.Controls.Add(this.buttonUP);
             this.Controls.Add(this.buttonHome);
-            this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonSelectFolder);
             this.Controls.Add(this.listView);
@@ -230,7 +218,6 @@
         private System.Windows.Forms.ListView listView;
         private System.Windows.Forms.Button buttonSelectFolder;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.Button buttonHome;
         private System.Windows.Forms.Button buttonUP;
         private System.Windows.Forms.RichTextBox richTextBoxFileInfo;

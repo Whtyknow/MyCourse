@@ -52,7 +52,7 @@ namespace MyGoogleDrive
             
         }       
 
-        public bool LoadFile(string name, byte[] data, FInfo info)
+        public bool LoadFile(string name, byte[] data)
         {            
             if (u != null)
             {
@@ -66,9 +66,7 @@ namespace MyGoogleDrive
                 using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
                 {
                     fs.Write(data, 0, data.Length);                   
-                }
-                FileInfo f = new FileInfo(path);
-                f.LastAccessTimeUtc = info.LastWriteTime;
+                }              
                 
                 return true;
             }
@@ -110,6 +108,21 @@ namespace MyGoogleDrive
                     return filesList;                    
             }
             return null;
-        }           
+        }      
+        
+        public bool SetFileInfo(string fileName, FInfo info)
+        {
+            try
+            {
+                string path = u.ServerDirectory + fileName;
+                FileInfo f = new FileInfo(path);
+                f.LastAccessTimeUtc = info.LastWriteTime;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }     
     }   
 }
