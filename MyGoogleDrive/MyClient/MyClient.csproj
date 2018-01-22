@@ -50,7 +50,7 @@
   <ItemGroup>
     <Compile Include="DriveClasses\DataInfo.cs" />
     <Compile Include="DriveClasses\Drive.cs" />
-    <Compile Include="DriveClasses\Sync.cs" />
+    <Compile Include="DriveClasses\Loader.cs" />
     <Compile Include="DriveClasses\Synchronizator.cs" />
     <Compile Include="FormDrive.cs">
       <SubType>Form</SubType>

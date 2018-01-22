@@ -24,7 +24,7 @@ namespace MyGoogleDrive
         bool Login(string login, string password);        
 
         [OperationContract]
-        bool LoadFile(string path, byte[] data);
+        bool LoadFile(string path, byte[] data, FInfo info);
 
         [OperationContract]
         byte[] DownloadFile(string path); 

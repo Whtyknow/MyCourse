@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace MyClient.DriveClasses
 {
-     static class Sync
+     static class Loader
     {
-        public static bool DownloadFileFromServer(string savePath, string serverFileName, DriveClient cl)
+        public static bool DownloadFileFromServer(string savePath, string serverFileName, FInfo finfo, DriveClient cl)
         {
             try
             {
@@ -20,6 +20,10 @@ namespace MyClient.DriveClasses
                 {
                     fs.Write(data, 0, data.Length);                    
                 }
+
+                FileInfo downloadedFile = new FileInfo(savePath);                
+                downloadedFile.LastWriteTimeUtc = finfo.LastWriteTime;
+
                 return true;
             }
 
@@ -42,7 +46,11 @@ namespace MyClient.DriveClasses
             }
             if (data != null)
             {
-                cl.LoadFile(fileName, data);
+                FileInfo loadedFile = new FileInfo(path);
+
+                FInfo loadedFileInfo = new FInfo() { Name = fileName, Path = path, LastWriteTime = loadedFile.LastWriteTimeUtc };
+
+                cl.LoadFile(fileName, data, loadedFileInfo);
                 return true;
             }
             return false;

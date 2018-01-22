@@ -18,4 +18,17 @@ namespace MyGoogleDrive
         [DataMember]
         public DateTime LastWriteTime { get; set; }
     }
+
+    [DataContract]
+    public class DInfo
+    {
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public FInfo[] FilesInfos { get; set; }
+
+        [DataMember]
+        public DateTime LastWriteTime { get; set; }
+    }
 }

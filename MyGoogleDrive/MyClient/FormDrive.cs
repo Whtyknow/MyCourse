@@ -97,47 +97,7 @@ namespace MyClient
 
         static private void Synchronize(DriveClient cl, FileInfo[] localFiles, FileInfo[] serverFiles, string localDirectory )
         {            
-            foreach(FileInfo info in localFiles)
-            {
-                FileInfo temp = serverFiles.Where(x => x.Name == info.Name).Where(x => x.Directory == info.Directory).SingleOrDefault();
-                string fileName = info.FullName.Replace(localDirectory, "");
-                if (temp != null)
-                {                    
-                    if (temp.LastWriteTimeUtc > info.LastWriteTimeUtc)
-                    {                        
-                        Sync.LoadFileOnServer(info.FullName, fileName, cl);                        
-                    }
-                    else
-                    {
-                        Sync.DownloadFileFromServer(localDirectory, fileName, cl);
-                    }
-                }
-                else
-                {
-                    Sync.LoadFileOnServer(info.FullName, fileName, cl);
-                }
-            }
-
-            foreach(FileInfo info in serverFiles)
-            {
-                FileInfo temp = localFiles.Where(x => x.Name == info.Name).Where(x => x.Directory == info.Directory).SingleOrDefault();
-                string fileName = info.FullName.Replace(localDirectory, "");
-                if (temp != null)
-                {                    
-                    if (temp.LastWriteTimeUtc > info.LastWriteTimeUtc)
-                    {
-                        Sync.DownloadFileFromServer(localDirectory, fileName, cl);
-                    }
-                    else
-                    {
-                        Sync.LoadFileOnServer(temp.FullName, fileName, cl);
-                    }
-                }
-                else
-                {
-                    Sync.DownloadFileFromServer(localDirectory,info.FullName, cl);
-                }
-            }
+            
         }
         
 
@@ -152,7 +112,7 @@ namespace MyClient
                 {
                     string fileName = d.FileName.Replace(localDirectory, "");
                     
-                    Sync.LoadFileOnServer(d.FileName, fileName, cl);
+                    Loader.LoadFileOnServer(d.FileName, fileName, cl);
                 }
             }
         }

@@ -45,21 +45,24 @@ namespace MyClient.DriveClasses
             foreach (FileInfo info in localFiles)
             {
                 string filePath = GiveLocalPath(info.FullName);
-                FInfo temp = serverFiles.Where(x => x.Path == filePath).SingleOrDefault();               
-                if (temp != null)
+                FInfo finfo = serverFiles.Where(x => x.Path == filePath).SingleOrDefault();               
+                if (finfo != null)
                 {
-                    if (temp.LastWriteTime < info.LastWriteTimeUtc)
+                    if (finfo.LastWriteTime == info.LastWriteTimeUtc) continue;
+
+
+                    if (finfo.LastWriteTime < info.LastWriteTimeUtc)
                     {
-                        Sync.LoadFileOnServer(info.FullName, filePath, client);                            
+                        Loader.LoadFileOnServer(info.FullName, filePath, client);                            
                     }
                     else
                     {
-                        Sync.DownloadFileFromServer(localFolderPath + filePath, filePath, client);
+                        Loader.DownloadFileFromServer(localFolderPath + filePath, filePath, finfo,  client);
                     }
                 }
                 else
                 {
-                    Sync.LoadFileOnServer(info.FullName, filePath, client);
+                    Loader.LoadFileOnServer(info.FullName, filePath, client);
                 }
             }
         }
